@@ -23,6 +23,10 @@ d3.csv('data/processed_fixed.csv')
     // Initialize chart and then show it
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
 
+    timeline = new timeLine({
+        parentElement: '#timeline'}, data
+    );
+
 
   })
   .catch(error => console.error(error));
