@@ -1,0 +1,50 @@
+/* Coolors Exported Palette - https://coolors.co/0968e5-0965e1-0963dd-0960d9-095dd5-095ad1-0958cd-0955c9-0952c5-094fc1 */
+
+/* CSV */
+0968E5,0965E1,0963DD,0960D9,095DD5,095AD1,0958CD,0955C9,0952C5,094FC1,094DBD,094AB9,0947B5,0945B1,0942AD,093FA8,093CA4,093AA0,09379C,093498,093294,092F90,092C8C,092988,092784,092480,09217C,091E78,091C74,091970
+
+/* With # */
+#0968E5, #0965E1, #0963DD, #0960D9, #095DD5, #095AD1, #0958CD, #0955C9, #0952C5, #094FC1, #094DBD, #094AB9, #0947B5, #0945B1, #0942AD, #093FA8, #093CA4, #093AA0, #09379C, #093498, #093294, #092F90, #092C8C, #092988, #092784, #092480, #09217C, #091E78, #091C74, #091970
+
+/* Array */
+["0968E5","0965E1","0963DD","0960D9","095DD5","095AD1","0958CD","0955C9","0952C5","094FC1","094DBD","094AB9","0947B5","0945B1","0942AD","093FA8","093CA4","093AA0","09379C","093498","093294","092F90","092C8C","092988","092784","092480","09217C","091E78","091C74","091970"]
+
+/* Object */
+{"Flickr Blue":"0968E5","Flickr Blue 2":"0965E1","Flickr Blue 3":"0963DD","Flickr Blue 4":"0960D9","Flickr Blue 5":"095DD5","Flickr Blue 6":"095AD1","Sapphire":"0958CD","Sapphire 2":"0955C9","Sapphire 3":"0952C5","Sapphire 4":"094FC1","Absolute Zero":"094DBD","Absolute Zero 2":"094AB9","Absolute Zero 3":"0947B5","Absolute Zero 4":"0945B1","Cobalt Blue":"0942AD","Denim Blue":"093FA8","Egyptian Blue":"093CA4","Egyptian Blue 2":"093AA0","Egyptian Blue 3":"09379C","Egyptian Blue 4":"093498","Egyptian Blue 5":"093294","International Klein Blue":"092F90","Resolution Blue":"092C8C","Resolution Blue 2":"092988","Resolution Blue 3":"092784","Resolution Blue 4":"092480","Resolution Blue 5":"09217C","Midnight Blue":"091E78","Midnight Blue 2":"091C74","Midnight Blue 3":"091970"}
+
+/* Extended Array */
+[{"name":"Flickr Blue","hex":"0968E5","rgb":[9,104,229],"cmyk":[96,55,0,10],"hsb":[214,96,90],"hsl":[214,92,47],"lab":[46,24,-70]},{"name":"Flickr Blue","hex":"0965E1","rgb":[9,101,225],"cmyk":[96,55,0,12],"hsb":[214,96,88],"hsl":[214,92,46],"lab":[45,25,-69]},{"name":"Flickr Blue","hex":"0963DD","rgb":[9,99,221],"cmyk":[96,55,0,13],"hsb":[215,96,87],"hsl":[215,92,45],"lab":[45,24,-68]},{"name":"Flickr Blue","hex":"0960D9","rgb":[9,96,217],"cmyk":[96,56,0,15],"hsb":[215,96,85],"hsl":[215,92,44],"lab":[43,25,-68]},{"name":"Flickr Blue","hex":"095DD5","rgb":[9,93,213],"cmyk":[96,56,0,16],"hsb":[215,96,84],"hsl":[215,92,44],"lab":[42,25,-68]},{"name":"Flickr Blue","hex":"095AD1","rgb":[9,90,209],"cmyk":[96,57,0,18],"hsb":[216,96,82],"hsl":[216,92,43],"lab":[41,25,-67]},{"name":"Sapphire","hex":"0958CD","rgb":[9,88,205],"cmyk":[96,57,0,20],"hsb":[216,96,80],"hsl":[216,92,42],"lab":[40,25,-66]},{"name":"Sapphire","hex":"0955C9","rgb":[9,85,201],"cmyk":[96,58,0,21],"hsb":[216,96,79],"hsl":[216,91,41],"lab":[39,26,-66]},{"name":"Sapphire","hex":"0952C5","rgb":[9,82,197],"cmyk":[95,58,0,23],"hsb":[217,95,77],"hsl":[217,91,40],"lab":[38,26,-65]},{"name":"Sapphire","hex":"094FC1","rgb":[9,79,193],"cmyk":[95,59,0,24],"hsb":[217,95,76],"hsl":[217,91,40],"lab":[37,26,-65]},{"name":"Absolute Zero","hex":"094DBD","rgb":[9,77,189],"cmyk":[95,59,0,26],"hsb":[217,95,74],"hsl":[217,91,39],"lab":[36,26,-64]},{"name":"Absolute Zero","hex":"094AB9","rgb":[9,74,185],"cmyk":[95,60,0,27],"hsb":[218,95,73],"hsl":[218,91,38],"lab":[35,27,-63]},{"name":"Absolute Zero","hex":"0947B5","rgb":[9,71,181],"cmyk":[95,61,0,29],"hsb":[218,95,71],"hsl":[218,91,37],"lab":[34,27,-63]},{"name":"Absolute Zero","hex":"0945B1","rgb":[9,69,177],"cmyk":[95,61,0,31],"hsb":[219,95,69],"hsl":[219,90,36],"lab":[33,27,-62]},{"name":"Cobalt Blue","hex":"0942AD","rgb":[9,66,173],"cmyk":[95,62,0,32],"hsb":[219,95,68],"hsl":[219,90,36],"lab":[32,27,-61]},{"name":"Denim Blue","hex":"093FA8","rgb":[9,63,168],"cmyk":[95,63,0,34],"hsb":[220,95,66],"hsl":[220,90,35],"lab":[30,27,-60]},{"name":"Egyptian Blue","hex":"093CA4","rgb":[9,60,164],"cmyk":[95,63,0,36],"hsb":[220,95,64],"hsl":[220,90,34],"lab":[29,28,-60]},{"name":"Egyptian Blue","hex":"093AA0","rgb":[9,58,160],"cmyk":[94,64,0,37],"hsb":[221,94,63],"hsl":[221,89,33],"lab":[28,27,-59]},{"name":"Egyptian Blue","hex":"09379C","rgb":[9,55,156],"cmyk":[94,65,0,39],"hsb":[221,94,61],"hsl":[221,89,32],"lab":[27,28,-58]},{"name":"Egyptian Blue","hex":"093498","rgb":[9,52,152],"cmyk":[94,66,0,40],"hsb":[222,94,60],"hsl":[222,89,32],"lab":[26,28,-58]},{"name":"Egyptian Blue","hex":"093294","rgb":[9,50,148],"cmyk":[94,66,0,42],"hsb":[222,94,58],"hsl":[222,89,31],"lab":[25,28,-57]},{"name":"International Klein Blue","hex":"092F90","rgb":[9,47,144],"cmyk":[94,67,0,44],"hsb":[223,94,56],"hsl":[223,88,30],"lab":[24,28,-56]},{"name":"Resolution Blue","hex":"092C8C","rgb":[9,44,140],"cmyk":[94,69,0,45],"hsb":[224,94,55],"hsl":[224,88,29],"lab":[23,29,-56]},{"name":"Resolution Blue","hex":"092988","rgb":[9,41,136],"cmyk":[93,70,0,47],"hsb":[225,93,53],"hsl":[225,88,28],"lab":[22,29,-55]},{"name":"Resolution Blue","hex":"092784","rgb":[9,39,132],"cmyk":[93,70,0,48],"hsb":[225,93,52],"hsl":[225,87,28],"lab":[21,29,-54]},{"name":"Resolution Blue","hex":"092480","rgb":[9,36,128],"cmyk":[93,72,0,50],"hsb":[226,93,50],"hsl":[226,87,27],"lab":[20,30,-54]},{"name":"Resolution Blue","hex":"09217C","rgb":[9,33,124],"cmyk":[93,73,0,51],"hsb":[227,93,49],"hsl":[227,86,26],"lab":[18,30,-53]},{"name":"Midnight Blue","hex":"091E78","rgb":[9,30,120],"cmyk":[93,75,0,53],"hsb":[229,93,47],"hsl":[229,86,25],"lab":[17,30,-53]},{"name":"Midnight Blue","hex":"091C74","rgb":[9,28,116],"cmyk":[92,76,0,55],"hsb":[229,92,45],"hsl":[229,86,25],"lab":[16,30,-52]},{"name":"Midnight Blue","hex":"091970","rgb":[9,25,112],"cmyk":[92,78,0,56],"hsb":[231,92,44],"hsl":[231,85,24],"lab":[15,31,-51]}]
+
+/* XML */
+<palette>
+  <color name="Flickr Blue" hex="0968E5" r="9" g="104" b="229" />
+  <color name="Flickr Blue" hex="0965E1" r="9" g="101" b="225" />
+  <color name="Flickr Blue" hex="0963DD" r="9" g="99" b="221" />
+  <color name="Flickr Blue" hex="0960D9" r="9" g="96" b="217" />
+  <color name="Flickr Blue" hex="095DD5" r="9" g="93" b="213" />
+  <color name="Flickr Blue" hex="095AD1" r="9" g="90" b="209" />
+  <color name="Sapphire" hex="0958CD" r="9" g="88" b="205" />
+  <color name="Sapphire" hex="0955C9" r="9" g="85" b="201" />
+  <color name="Sapphire" hex="0952C5" r="9" g="82" b="197" />
+  <color name="Sapphire" hex="094FC1" r="9" g="79" b="193" />
+  <color name="Absolute Zero" hex="094DBD" r="9" g="77" b="189" />
+  <color name="Absolute Zero" hex="094AB9" r="9" g="74" b="185" />
+  <color name="Absolute Zero" hex="0947B5" r="9" g="71" b="181" />
+  <color name="Absolute Zero" hex="0945B1" r="9" g="69" b="177" />
+  <color name="Cobalt Blue" hex="0942AD" r="9" g="66" b="173" />
+  <color name="Denim Blue" hex="093FA8" r="9" g="63" b="168" />
+  <color name="Egyptian Blue" hex="093CA4" r="9" g="60" b="164" />
+  <color name="Egyptian Blue" hex="093AA0" r="9" g="58" b="160" />
+  <color name="Egyptian Blue" hex="09379C" r="9" g="55" b="156" />
+  <color name="Egyptian Blue" hex="093498" r="9" g="52" b="152" />
+  <color name="Egyptian Blue" hex="093294" r="9" g="50" b="148" />
+  <color name="International Klein Blue" hex="092F90" r="9" g="47" b="144" />
+  <color name="Resolution Blue" hex="092C8C" r="9" g="44" b="140" />
+  <color name="Resolution Blue" hex="092988" r="9" g="41" b="136" />
+  <color name="Resolution Blue" hex="092784" r="9" g="39" b="132" />
+  <color name="Resolution Blue" hex="092480" r="9" g="36" b="128" />
+  <color name="Resolution Blue" hex="09217C" r="9" g="33" b="124" />
+  <color name="Midnight Blue" hex="091E78" r="9" g="30" b="120" />
+  <color name="Midnight Blue" hex="091C74" r="9" g="28" b="116" />
+  <color name="Midnight Blue" hex="091970" r="9" g="25" b="112" />
+</palette>
