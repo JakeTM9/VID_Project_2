@@ -77,8 +77,8 @@ class LeafletMap {
                               d3.select('#tooltip')
                                   .style('opacity', 1)
                                   .style('z-index', 1000000)
-                                    // Format number with million and thousand separator ${d.city} ${d3.format(',')(d.population)}
-                                  .html(`<div class="tooltip-label">City: , Population </div>`);
+                                    // Format number with million and thousand separator THESE R THE VARS: ${d.city} ${d3.format(',')(d.population)}
+                                  .html(`<div class="tooltip-label">City: PutVarHere , Population: PutVarHere</div>`);
   
                             })
                           .on('mousemove', (event) => {
