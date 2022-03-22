@@ -1,8 +1,6 @@
 d3.csv('data/processed_fixed.csv')
 .then(data => {
-    let timelineData = [];  
     data.forEach(d => {
-        timelineData.push(d.year);
 
       //d.latitude = +d.lat; //make sure these are not strings
       //d.longitude = +d.lng; //make sure these are not strings
@@ -22,11 +20,10 @@ d3.csv('data/processed_fixed.csv')
     });
 
     console.log(data);//ok, got my data!
-    console.log('timeline data: ', timelineData)
 
     // Initialize chart and then show it
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
-    timeLine = new TimeLine({ parentElement: '#timeline'}, timelineData);
+    timeLine = new TimeLine({ parentElement: '#timeline'}, data);
 
 
   })

@@ -24,7 +24,7 @@ class TimeLine {
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
-
+        console.log('vis.height: ', vis.height)
         // // Define size of SVG drawing area
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
@@ -38,6 +38,9 @@ class TimeLine {
         vis.xScale = d3.scaleBand()
             .range([0, vis.width]);
 
+        vis.yScale = d3.scaleLinear()
+            .range([0, vis.height]);
+
         vis.updateVis();
     }
 
@@ -49,24 +52,36 @@ class TimeLine {
         // vis.chart.selectAll("rect").remove();
 
         // Process data
-        // vis.hamiltonData = []
-        // vis.data.forEach(d => {
-        //     if (d.county == "Hamilton") {
-        //         vis.hamiltonData.push({"total": d.total, "cat": d.cat, "stat": d.stat});
-        //     }
-        // }); 
-
-        vis.data.sort();
-
-        // vis.hamiltonProcessedData = []
-        // let hamiltonTotalDays = vis.hamiltonData[0].total
-        // vis.hamiltonData.forEach(d => {
-        //     vis.hamiltonProcessedData.push({"cat": d.cat, "stat": d.stat / hamiltonTotalDays * 100})
-        // });
+        vis.yearArray = [];
+        vis.data.forEach(d => {
+            vis.yearArray.push(d.year);
+        });
+        vis.yearArray.sort();
+        console.log('year array: ', vis.yearArray)
+        vis.yearFrequencyArray = []
+        const getYearFrequency = (array) => {
+            const map = {};
+            array.forEach(d => {
+                if (map[d]) {
+                    map[d] ++;
+                }
+                else {
+                    map[d] = 1;
+                }
+            });
+            return map;
+        };
+        vis.yearFrequency = getYearFrequency(vis.yearArray)
+        console.log('year frequency: ', vis.yearFrequency)
+        vis.yearArray.forEach(d => {
+            vis.yearFrequencyArray.push(vis.yearFrequency[d])
+        });
+        console.log('year freq array: ', vis.yearFrequencyArray)
 
         // set scale domains
         // vis.xScale.domain([0, d3.max(vis.hamiltonProcessedData, d => d.stat)]);
-        vis.xScale.domain(vis.data.map(d => d)).paddingInner(0.1);
+        vis.xScale.domain(vis.yearArray.map(d => d)).paddingInner(0.1);
+        vis.yScale.domain([d3.max(vis.yearFrequencyArray), -(d3.max(vis.yearFrequencyArray) * .05)]);
 
         // vis.hamiltonxAxis.tickSizeOuter(0);
         // vis.hamiltonyAxis.tickSizeOuter(0);
@@ -90,24 +105,26 @@ class TimeLine {
 
         // Add rectangles
         vis.rect = vis.chart.selectAll('rect')
-            .data(vis.data)
+            .data(vis.yearArray)
             .enter()
             .append('rect')
                 .attr('class', 'bar')
                 .attr('fill', function(d){return vis.myColor(d)})
                 .attr('width', d => vis.xScale.bandwidth())
-                .attr('height', vis.height)
-                .attr('y', 0)
+                .attr('height', d => vis.height - vis.yScale(vis.yearFrequency[d]))
+                .attr('y', d => vis.yScale(vis.yearFrequency[d]))
                 .attr('x', d => vis.xScale(d));
 
         vis.rect.on('mouseover', (event,d) => {
-            console.log('Mouseover rect')
+            console.log('Mouseover d: ', d)
+            console.log('Mouseover d frequency: ', vis.yearFrequency[d])
             d3.select('#tooltip')
                 .style('display', 'block')
                 .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
                 <div class="tooltip-title">${d}</div>
+                <div><i>${vis.yearFrequency[d]} days</i></div>
                 `);
         })
         .on('mouseleave', () => {
