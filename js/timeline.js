@@ -56,6 +56,8 @@ class TimeLine {
         //     }
         // }); 
 
+        vis.data.sort();
+
         // vis.hamiltonProcessedData = []
         // let hamiltonTotalDays = vis.hamiltonData[0].total
         // vis.hamiltonData.forEach(d => {
@@ -64,7 +66,7 @@ class TimeLine {
 
         // set scale domains
         // vis.xScale.domain([0, d3.max(vis.hamiltonProcessedData, d => d.stat)]);
-        vis.xScale.domain(vis.data.map(d => d.year)).paddingInner(0.1);
+        vis.xScale.domain(vis.data.map(d => d)).paddingInner(0.1);
 
         // vis.hamiltonxAxis.tickSizeOuter(0);
         // vis.hamiltonyAxis.tickSizeOuter(0);
@@ -96,6 +98,20 @@ class TimeLine {
                 .attr('width', d => vis.xScale.bandwidth())
                 .attr('height', vis.height)
                 .attr('y', 0)
-                .attr('x', d => vis.xScale(d.year));
+                .attr('x', d => vis.xScale(d));
+
+        vis.rect.on('mouseover', (event,d) => {
+            console.log('Mouseover rect')
+            d3.select('#tooltip')
+                .style('display', 'block')
+                .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+                .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                .html(`
+                <div class="tooltip-title">${d}</div>
+                `);
+        })
+        .on('mouseleave', () => {
+            d3.select('#tooltip').style('display', 'none');
+        });
     }  
 }
