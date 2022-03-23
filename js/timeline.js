@@ -3,8 +3,8 @@ class TimeLine {
     constructor(_config, _data) {
         this.config = {
             parentElement: _config.parentElement,
-            containerHeight: _config.containerHeight || 140,
-            margin: { top: 40, bottom: 35, right: 50, left: 115 },
+            containerHeight: _config.containerHeight || 250,
+            margin: { top: 40, bottom: 35, right: 50, left: 50 },
             tooltipPadding: _config.tooltipPadding || 15
         }
 
@@ -31,8 +31,9 @@ class TimeLine {
             .attr('height', vis.config.containerHeight);
 
         // // Append group element that will contain our actual chart (see margin convention)
+        const transformheight = - vis.config.margin.top 
         vis.chart = vis.svg.append('g')
-            .attr('transform', `translate(${vis.config.margin.left},${vis.config.margin.top})`);
+            .attr('transform', `translate(${vis.config.margin.left}, ${transformheight})`);
 
         // scales
         vis.xScale = d3.scaleBand()
@@ -112,7 +113,7 @@ class TimeLine {
                 .attr('fill', function(d){return vis.myColor(d)})
                 .attr('width', d => vis.xScale.bandwidth())
                 .attr('height', d => vis.height - vis.yScale(vis.yearFrequency[d]))
-                .attr('y', d => vis.yScale(vis.yearFrequency[d]))
+                .attr('y', d => vis.yScale(vis.yearFrequency[d] / 2))
                 .attr('x', d => vis.xScale(d));
 
         vis.rect.on('mouseover', (event,d) => {
