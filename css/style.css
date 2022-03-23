@@ -19,8 +19,10 @@ header {
 }
 
 #my-map {
-  margin-top:10px;
   border: 1px solid black;
+  width:1000px;
+  height:650px;
+  margin:auto;
 }
 
 #container {

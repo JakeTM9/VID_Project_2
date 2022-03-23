@@ -39,7 +39,10 @@ class LeafletMap {
       vis.base_layer = L.tileLayer(vis.esriUrl, {
         id: 'esri-image',
         attribution: vis.esriAttr,
-        ext: 'png'
+        ext: 'png',
+        continuousWorld: false,
+        noWrap: true,
+        maxBoundsViscosity: 1
       });
   
       vis.theMap = L.map('my-map', {
