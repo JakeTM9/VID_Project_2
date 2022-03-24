@@ -112,8 +112,8 @@ class LeafletMap {
                           .on('mouseover', function(event,d) { //function to add mouseover event
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                                 .duration('150') //how long we are transitioning between the two states (works like keyframes)
-                                .attr("fill", "red") //change the fill
-                                .attr('r', 4); //change radius
+                                /*.attr("fill", "white") *///change the fill
+                                .attr('r', vis.theMap.getZoom() + 10); //change radius
   
                               //create a tool tip
                               d3.select('#tooltip')
@@ -133,7 +133,7 @@ class LeafletMap {
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                                 .duration('150') //how long we are transitioning between the two states (works like keyframes)
                                 .attr("fill", d => handleDotColor(d.phylum)) //change the fill
-                                .attr('r', 3) //change radius
+                                .attr('r', vis.theMap.getZoom() + 1) //change radius
   
                               d3.select('#tooltip').style('opacity', 0);//turn off the tooltip
   
@@ -159,7 +159,7 @@ class LeafletMap {
       // console.log(vis.map.getZoom()); //how zoomed am I
       
       //want to control the size of the radius to be a certain number of meters? 
-      vis.radiusSize = 3; 
+      vis.radiusSize = vis.theMap.getZoom() + 1; 
       // if( vis.theMap.getZoom > 15 ){
       //   metresPerPixel = 40075016.686 * Math.abs(Math.cos(map.getCenter().lat * Math.PI/180)) / Math.pow(2, map.getZoom()+8);
       //   desiredMetersForPoint = 100; //or the uncertainty measure... =) 
