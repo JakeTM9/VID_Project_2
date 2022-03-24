@@ -5,7 +5,7 @@ class TimeLine {
             parentElement: _config.parentElement,
             containerHeight: _config.containerHeight || 250,
             margin: { top: 40, bottom: 35, right: 50, left: 50 },
-            tooltipPadding: _config.tooltipPadding || 15
+            tooltipPadding: _config.tooltipPadding || 10
         }
 
         this.config.containerWidth = d3.select('#timelinediv').node().getBoundingClientRect().width;
@@ -93,9 +93,8 @@ class TimeLine {
         // vis.colorScale = d3.scaleOrdinal()
         //         .range(['#e41a1c','#377eb8','#4daf4a'])
 
-        vis.colorScale = ["0968E5","0965E1","0963DD","0960D9","095DD5","095AD1","0958CD","0955C9","0952C5","094FC1","094DBD","094AB9","0947B5","0945B1","0942AD","093FA8","093CA4","093AA0","09379C","093498","093294","092F90","092C8C","092988","092784","092480","09217C","091E78","091C74","091970"];
-        vis.myColor = d3.scaleLinear().domain([1,10])
-            .range(["white", "blue"]) 
+        // vis.colorScale = ["0968E5","0965E1","0963DD","0960D9","095DD5","095AD1","0958CD","0955C9","0952C5","094FC1","094DBD","094AB9","0947B5","0945B1","0942AD","093FA8","093CA4","093AA0","09379C","093498","093294","092F90","092C8C","092988","092784","092480","09217C","091E78","091C74","091970"];
+        vis.colorScale = ["#0000FF", "#FF0000", "#6600FF", "#FF6600", "#00FF00", "#FFF00"]
 
         vis.renderVis()
     }
@@ -110,15 +109,13 @@ class TimeLine {
             .enter()
             .append('rect')
                 .attr('class', 'bar')
-                .attr('fill', function(d){return vis.myColor(d)})
+                .attr('fill', function(d,i) { return vis.colorScale[i%5]})
                 .attr('width', d => vis.xScale.bandwidth())
                 .attr('height', d => vis.height - vis.yScale(vis.yearFrequency[d]))
                 .attr('y', d => vis.yScale(vis.yearFrequency[d] / 2))
                 .attr('x', d => vis.xScale(d));
 
         vis.rect.on('mouseover', (event,d) => {
-            console.log('Mouseover d: ', d)
-            console.log('Mouseover d frequency: ', vis.yearFrequency[d])
             d3.select('#tooltip')
                 .style('display', 'block')
                 .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
