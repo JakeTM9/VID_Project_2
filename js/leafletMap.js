@@ -64,6 +64,27 @@ class LeafletMap {
           case "Myxomycota":
             return "green";
             break;
+          case "Ascomycota":
+            return "red";
+            break;
+          case "Basidiomycota":
+            return "blue";
+            break;
+          case "Amoebozoa":
+            return "yellow";
+            break;
+          case "Chytridiomycota":
+            return "purple";
+            break;
+          case "Zygomycota":
+            return "orange";
+            break;
+          case "Oomycota":
+            return "pink";
+            break;
+          case "Blastocladiomycota":
+            return "brown";
+            break;
           default:
             return "black";
         }
