@@ -42,14 +42,20 @@ class LeafletMap {
         ext: 'png',
         continuousWorld: false,
         noWrap: true,
-        maxBoundsViscosity: 1
+        minZoom: 2
+        
       });
-  
+      
+      let southWest = L.latLng(-89.98155760646617, -180);
+      let northEast = L.latLng(89.99346179538875, 180);
       vis.theMap = L.map('my-map', {
-        center: [30, 0],
+        center: [0,0],
         zoom: 2,
-        layers: [vis.base_layer]
+        layers: [vis.base_layer],
+        maxBoundsViscosity: 1.0
       });
+      vis.theMap.bounds = []
+      vis.theMap.setMaxBounds(L.latLngBounds(southWest, northEast));
   
       //if you stopped here, you would just have a map
   

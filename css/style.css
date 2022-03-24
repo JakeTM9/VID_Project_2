@@ -52,3 +52,54 @@ header {
     font-size: 10px;
     color: #888;
   }
+
+  /*For Legend */
+.legend {
+  margin: 20px 0;
+  list-style: none;
+  padding: 0;
+}
+.legend-btn {
+  display: inline-block;
+  margin: 0 20px 0 0;
+  /*cursor: pointer;*/
+  transition: all ease-in-out 200ms;
+}
+
+.legend-btn.inactive {
+  opacity: 0.3;
+}
+.legend-symbol {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+  display: inline-block;
+  border: 1px solid black;
+}
+.legend-btn[category="Myxomycota"] .legend-symbol {
+  background: green;
+}
+.legend-btn[category="Ascomycota"] .legend-symbol {
+  background: red;
+}
+.legend-btn[category="Basidiomycota"] .legend-symbol {
+  background: blue;
+}
+.legend-btn[category="Amoebozoa"] .legend-symbol {
+  background: yellow;
+}
+.legend-btn[category="Chytridiomycota"] .legend-symbol {
+  background: purple;
+}
+.legend-btn[category="Zygomycota"] .legend-symbol {
+  background: orange;
+}
+.legend-btn[category="Oomycota"] .legend-symbol {
+  background: pink;
+}
+.legend-btn[category="Blastocladiomycota"] .legend-symbol {
+  background: brown;
+}
+.legend-btn[category="Uknown"] .legend-symbol {
+  background: black;
+}
