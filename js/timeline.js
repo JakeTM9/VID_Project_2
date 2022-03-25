@@ -24,7 +24,7 @@ class TimeLine {
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
-        console.log('vis.height: ', vis.height)
+
         // // Define size of SVG drawing area
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
@@ -41,6 +41,20 @@ class TimeLine {
 
         vis.yScale = d3.scaleLinear()
             .range([0, vis.height]);
+
+        // init axis
+        vis.xAxis = d3.axisBottom(vis.xScale).tickFormat(d3.format("d")); // Remove thousand comma
+
+        // init axis groups
+        vis.xAxisGroup = vis.chart.append("g")
+            .attr('class', 'axis x-axis')
+            .attr('transform', `translate(0, ${vis.height})`);
+        vis.xAxisGroup.append("text")
+            .attr("y", 30)
+            .attr("x", vis.chartWidth / 2)
+            .attr("text-anchor", "middle")
+            .attr("stroke", "black")
+            .text("Year");
 
         vis.updateVis();
     }
@@ -83,6 +97,8 @@ class TimeLine {
         // vis.xScale.domain([0, d3.max(vis.hamiltonProcessedData, d => d.stat)]);
         vis.xScale.domain(vis.yearArray.map(d => d)).paddingInner(0.1);
         vis.yScale.domain([d3.max(vis.yearFrequencyArray), -(d3.max(vis.yearFrequencyArray) * .05)]);
+
+        vis.xAxis.tickSizeOuter(0);
 
         // vis.hamiltonxAxis.tickSizeOuter(0);
         // vis.hamiltonyAxis.tickSizeOuter(0);
@@ -128,5 +144,8 @@ class TimeLine {
         .on('mouseleave', () => {
             d3.select('#tooltip').style('display', 'none');
         });
+
+        // Update axis
+        vis.xAxisGroup.call(vis.xAxis);
     }  
 }
