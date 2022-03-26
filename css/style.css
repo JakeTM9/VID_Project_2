@@ -2,6 +2,40 @@
     width: 100%;
     height: 500px;
   }
+
+body {
+  /*background: linear-gradient(to bottom right, darkgreen, lightgreen);*/
+  background-color:darkolivegreen;
+  color: black;
+  font: normal 13px/1.625 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 50px;
+  text-align: center;
+}
+
+header {
+	border-bottom: 1px solid black;
+	padding: 0 0 7px;
+}
+
+#my-map {
+  border: 1px solid black;
+  width:1000px;
+  height:650px;
+  margin:auto;
+}
+
+#container {
+	background: ghostwhite;
+	border: 1px solid black;
+	-webkit-box-shadow: 0px 0px 12px rgba(0,0,0,.3);
+	-moz-box-shadow: 0px 0px 12px rgba(0,0,0,.3);
+	box-shadow: 0px 0px 12px rgba(0,0,0,.3);
+	margin: 0 auto;
+	padding: 25px;
+	min-height: 480px;
+	min-width: 640px;
+}
   
 /* Tooltip */
 #tooltip {
@@ -24,4 +58,61 @@
 #tooltip ul {
   margin: 5px 0 0 0;
   padding-left: 20px;
+}
+
+.tooltip-map-label {
+  font-weight: 500;
+  font-size: 20px;
+  color: black;
+}
+
+  /*For Legend */
+.legend {
+  margin: 20px 0;
+  list-style: none;
+  padding: 0;
+}
+.legend-btn {
+  display: inline-block;
+  margin: 0 20px 0 0;
+  /*cursor: pointer;*/
+  transition: all ease-in-out 200ms;
+}
+
+.legend-btn.inactive {
+  opacity: 0.3;
+}
+.legend-symbol {
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+  display: inline-block;
+  border: 1px solid black;
+}
+.legend-btn[category="Myxomycota"] .legend-symbol {
+  background: green;
+}
+.legend-btn[category="Ascomycota"] .legend-symbol {
+  background: red;
+}
+.legend-btn[category="Basidiomycota"] .legend-symbol {
+  background: blue;
+}
+.legend-btn[category="Amoebozoa"] .legend-symbol {
+  background: yellow;
+}
+.legend-btn[category="Chytridiomycota"] .legend-symbol {
+  background: purple;
+}
+.legend-btn[category="Zygomycota"] .legend-symbol {
+  background: orange;
+}
+.legend-btn[category="Oomycota"] .legend-symbol {
+  background: pink;
+}
+.legend-btn[category="Blastocladiomycota"] .legend-symbol {
+  background: brown;
+}
+.legend-btn[category="Uknown"] .legend-symbol {
+  background: black;
 }

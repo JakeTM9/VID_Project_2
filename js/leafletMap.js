@@ -39,14 +39,23 @@ class LeafletMap {
       vis.base_layer = L.tileLayer(vis.esriUrl, {
         id: 'esri-image',
         attribution: vis.esriAttr,
-        ext: 'png'
+        ext: 'png',
+        continuousWorld: false,
+        noWrap: true,
+        minZoom: 2
+        
       });
-  
+      
+      let southWest = L.latLng(-89.98155760646617, -180);
+      let northEast = L.latLng(89.99346179538875, 180);
       vis.theMap = L.map('my-map', {
-        center: [30, 0],
+        center: [0,0],
         zoom: 2,
-        layers: [vis.base_layer]
+        layers: [vis.base_layer],
+        maxBoundsViscosity: 1.0
       });
+      vis.theMap.bounds = []
+      vis.theMap.setMaxBounds(L.latLngBounds(southWest, northEast));
   
       //if you stopped here, you would just have a map
   
@@ -54,12 +63,45 @@ class LeafletMap {
        L.svg({clickable:true}).addTo(vis.theMap)// we have to make the svg layer clickable
        vis.overlay = d3.select(vis.theMap.getPanes().overlayPane)
        vis.svg = vis.overlay.select('svg').attr("pointer-events", "auto")
+
+      //handle DOT color
+      function handleDotColor(phylum){
+        switch(phylum){
+          case "Myxomycota":
+            return "green";
+            break;
+          case "Ascomycota":
+            return "red";
+            break;
+          case "Basidiomycota":
+            return "blue";
+            break;
+          case "Amoebozoa":
+            return "yellow";
+            break;
+          case "Chytridiomycota":
+            return "purple";
+            break;
+          case "Zygomycota":
+            return "orange";
+            break;
+          case "Oomycota":
+            return "pink";
+            break;
+          case "Blastocladiomycota":
+            return "brown";
+            break;
+          default:
+            return "black";
+        }
+        
+      }
   
       //these are the city locations, displayed as a set of dots 
       vis.Dots = vis.svg.selectAll('circle')
                       .data(vis.data) 
                       .join('circle')
-                          .attr("fill", "steelblue") 
+                          .attr("fill", d => handleDotColor(d.phylum)) 
                           .attr("stroke", "black")
                           //Leaflet has to take control of projecting points. Here we are feeding the latitude and longitude coordinates to
                           //leaflet so that it can project them on the coordinates of the view. Notice, we have to reverse lat and lon.
@@ -70,15 +112,19 @@ class LeafletMap {
                           .on('mouseover', function(event,d) { //function to add mouseover event
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                                 .duration('150') //how long we are transitioning between the two states (works like keyframes)
-                                .attr("fill", "red") //change the fill
-                                .attr('r', 4); //change radius
+                                /*.attr("fill", "white") *///change the fill
+                                .attr('r', vis.theMap.getZoom() + 10); //change radius
   
                               //create a tool tip
                               d3.select('#tooltip')
                                   .style('opacity', 1)
                                   .style('z-index', 1000000)
-                                    // Format number with million and thousand separator ${d.city} ${d3.format(',')(d.population)}
-                                  .html(`<div class="tooltip-label">City: , Population </div>`);
+                                    // Format number with million and thousand separator THESE R THE VARS: ${d.city} ${d3.format(',')(d.population)}
+                                  .html(`<div class="tooltip-map-label">Collected: ${d.year} <br>
+                                                                    Recorded By: ${d.recordedBy} <br>
+                                                                    Kingdom: ${d.kingdom} <br>
+                                                                    Phylum: ${d.phylum} <br>
+                                                                    Habitat: ${d.habitat}</div>`);
   
                             })
                           .on('mousemove', (event) => {
@@ -90,8 +136,8 @@ class LeafletMap {
                           .on('mouseleave', function() { //function to add mouseover event
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                                 .duration('150') //how long we are transitioning between the two states (works like keyframes)
-                                .attr("fill", "steelblue") //change the fill
-                                .attr('r', 3) //change radius
+                                .attr("fill", d => handleDotColor(d.phylum)) //change the fill
+                                .attr('r', vis.theMap.getZoom() + 1) //change radius
   
                               d3.select('#tooltip').style('opacity', 0);//turn off the tooltip
   
@@ -117,7 +163,7 @@ class LeafletMap {
       // console.log(vis.map.getZoom()); //how zoomed am I
       
       //want to control the size of the radius to be a certain number of meters? 
-      vis.radiusSize = 3; 
+      vis.radiusSize = vis.theMap.getZoom() + 1; 
       // if( vis.theMap.getZoom > 15 ){
       //   metresPerPixel = 40075016.686 * Math.abs(Math.cos(map.getCenter().lat * Math.PI/180)) / Math.pow(2, map.getZoom()+8);
       //   desiredMetersForPoint = 100; //or the uncertainty measure... =) 

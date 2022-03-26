@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>D3 Project Starter Template</title>
+    <title>VID Project 2</title>
     <meta charset="UTF-8">
     <link rel="icon" href="data:;base64,iVBORwOKGO=" />
     <link rel="stylesheet" href="css/leaflet.css">
@@ -9,20 +9,47 @@
 </head>
 <body>    
     <!-- Add HTML content, SVG drawing area, ... -->
+  
+  <div id="container">
+    <!--Title Stuff-->
+    <header>
+      <div>
+          <h1>VID Project 2: Visualizing the UC Herbarium</h1>
+          <h3>by Nathaniel Alter, Steven Hagedorn, Gabe Rapaport, and Jakob Wardega</h3>
+      </div>
+    </header>
+    <!--For Map-->
+    <br>
+    <ul id="phylum-legend" class="legend">
+      <li class="legend-btn" category="Myxomycota"><span class="legend-symbol"></span>Myxomycota</li>
+      <li class="legend-btn" category="Ascomycota"><span class="legend-symbol"></span>Ascomycota</li>
+      <li class="legend-btn" category="Basidiomycota"><span class="legend-symbol"></span>Basidiomycota</li>
+      <li class="legend-btn" category="Amoebozoa"><span class="legend-symbol"></span>Amoebozoa</li>
+      <li class="legend-btn" category="Chytridiomycota"><span class="legend-symbol"></span>Chytridiomycota</li>
+      <li class="legend-btn" category="Zygomycota"><span class="legend-symbol"></span>Zygomycota</li>
+      <li class="legend-btn" category="Oomycota"><span class="legend-symbol"></span>Oomycota</li>
+      <li class="legend-btn" category="Blastocladiomycota"><span class="legend-symbol"></span>Blastocladiomycota</li>
+      <li class="legend-btn" category="Uknown"><span class="legend-symbol"></span>Uknown</li>
+    </ul>
     <div id="my-map"></div>
-    <div id="timelinediv">
-        <svg id="timeline"></svg>
-    </div>
 
+    <!--For Timeline-->
+    <div id="timelinediv">
+      <svg id="timeline"></svg>
+    </div>
+    <!--For tooltips-->
     <div id="tooltip"></div>
 
-    <!-- D3 bundle -->
-    <script src="js/d3.v6.min.js"></script>
-    <script src="js/leaflet.js"></script>
+  </div>
+  
+  <!-- D3 bundle -->
+  <script src="js/d3.v6.min.js"></script>
+  <script src="js/leaflet.js"></script>
 
-    <!-- Our JS code -->
-    <script src="js/main.js"></script>
-    <script src="js/leafletMap.js"></script>
-    <script src="js/timeline.js"></script>
-</body>
+  <!-- Our JS code -->
+  <script src="js/main.js"></script>
+  <script src="js/leafletMap.js"></script>
+  <script src="js/timeline.js"></script>
+
+  </body>
 </html>
