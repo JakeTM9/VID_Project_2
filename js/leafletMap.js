@@ -116,7 +116,7 @@ class LeafletMap {
                                 .attr('r', vis.theMap.getZoom() + 10); //change radius
   
                               //create a tool tip
-                              d3.select('#tooltip')
+                              d3.select('#tooltip-map')
                                   .style('opacity', 1)
                                   .style('z-index', 1000000)
                                     // Format number with million and thousand separator THESE R THE VARS: ${d.city} ${d3.format(',')(d.population)}
@@ -129,7 +129,7 @@ class LeafletMap {
                             })
                           .on('mousemove', (event) => {
                               //position the tooltip
-                              d3.select('#tooltip')
+                              d3.select('#tooltip-map')
                                .style('left', (event.pageX + 10) + 'px')   
                                 .style('top', (event.pageY + 10) + 'px');
                            })              
@@ -139,7 +139,7 @@ class LeafletMap {
                                 .attr("fill", d => handleDotColor(d.phylum)) //change the fill
                                 .attr('r', vis.theMap.getZoom() + 1) //change radius
   
-                              d3.select('#tooltip').style('opacity', 0);//turn off the tooltip
+                              d3.select('#tooltip-map').style('opacity', 0);//turn off the tooltip
   
                             })
                           .on('click', (event, d) => { //experimental feature I was trying- click on point and then fly to it
