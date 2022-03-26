@@ -120,7 +120,11 @@ class LeafletMap {
                                   .style('opacity', 1)
                                   .style('z-index', 1000000)
                                     // Format number with million and thousand separator THESE R THE VARS: ${d.city} ${d3.format(',')(d.population)}
-                                  .html(`<div class="tooltip-label">City: PutVarHere , Population: PutVarHere</div>`);
+                                  .html(`<div class="tooltip-label">Collected: ${d.year} <br>
+                                                                    Recorded By: ${d.recordedBy} <br>
+                                                                    Kingdom: ${d.kingdom} <br>
+                                                                    Phylum: ${d.phylum} <br>
+                                                                    Habitat: ${d.habitat}</div>`);
   
                             })
                           .on('mousemove', (event) => {
