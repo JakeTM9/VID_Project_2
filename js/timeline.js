@@ -39,15 +39,19 @@ class TimeLine {
         // scales
         vis.xScale = d3.scaleBand()
             .range([0, vis.width]);
-
         vis.xAxisScale = d3.scaleLinear()
             .range([0, vis.width]);
-
         vis.yScale = d3.scaleLinear()
             .range([0, vis.height]);
+        vis.yAxisScale = d3.scaleLinear()
+            .range([vis.height / 2, 0])
+        vis.lowerYAxisScale = d3.scaleLinear()
+            .range([vis.height / 2, 0])
 
         // init axis
         vis.xAxis = d3.axisBottom(vis.xAxisScale).tickFormat(d3.format("d")); // Remove thousand comma
+        vis.yAxis = d3.axisLeft(vis.yAxisScale);
+        vis.lowerYAxis = d3.axisLeft(vis.lowerYAxisScale);
 
         // init axis groups
         vis.xAxisGroup = vis.chart.append("g")
@@ -59,6 +63,21 @@ class TimeLine {
             .attr("text-anchor", "right")
             .attr("stroke", "black")
             .text("Year");
+
+        vis.yAxisGroup = vis.chart.append("g")
+            .attr('class', 'axis y-axis')
+            .attr('transform', `translate(0, ${vis.height / 2})`);
+        vis.yAxisGroup.append("text")
+            .attr("y", -35)
+            .attr("x", -vis.height / 2 + 25)
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("stroke", "black")
+            .text("# of Days");
+
+        vis.lowerYAxisGroup = vis.chart.append("g")
+            .attr('class', 'axis y-axis')
+            .attr('transform', `translate(0, 169)`);
 
         vis.updateVis();
     }
@@ -111,10 +130,15 @@ class TimeLine {
         vis.xScale.domain(vis.fullYearArray).paddingInner(0.1);
         vis.xAxisScale.domain(d3.extent(vis.yearArray));
         vis.yScale.domain([d3.max(vis.yearFrequencyArray) / 2 * 1.05, -(d3.max(vis.yearFrequencyArray) * .02)]);
+        vis.yAxisScale.domain([-(d3.max(vis.yearFrequencyArray) * .02),d3.max(vis.yearFrequencyArray) / 2 * 1.05]);
+        vis.lowerYAxisScale.domain([d3.max(vis.yearFrequencyArray) / 2 * 1.05, -(d3.max(vis.yearFrequencyArray) * .02)]);
 
         vis.xAxis.tickSizeOuter(0);
-        console.log('year array len: ', vis.numUniqueYears)
+        vis.yAxis.tickSizeOuter(0);
+        vis.lowerYAxis.tickSizeOuter(0);
         vis.xAxis.ticks(vis.numUniqueYears / 8);
+        vis.yAxis.ticks(6);
+        vis.lowerYAxis.ticks(6);
 
         vis.colorScale = ["#0000FF", "#FF0000", "#6600FF", "#FF6600", "#00FF00", "#FFF00"]
 
@@ -153,5 +177,8 @@ class TimeLine {
 
         // Update axis
         vis.xAxisGroup.call(vis.xAxis);
+        vis.yAxisGroup.call(vis.yAxis);
+        vis.lowerYAxisGroup.call(vis.lowerYAxis);
+
     }  
 }
