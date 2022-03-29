@@ -25,10 +25,6 @@ d3.csv('data/processed_fixed.csv')
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
     timeLine = new TimeLine({ parentElement: '#timeline'}, data);
 
-    timeline = new timeLine({
-        parentElement: '#timeline'}, data
-    );
-
 
   })
   .catch(error => console.error(error));
