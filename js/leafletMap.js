@@ -63,37 +63,45 @@ class LeafletMap {
        L.svg({clickable:true}).addTo(vis.theMap)// we have to make the svg layer clickable
        vis.overlay = d3.select(vis.theMap.getPanes().overlayPane)
        vis.svg = vis.overlay.select('svg').attr("pointer-events", "auto")
-
-      //handle DOT color
-      function handleDotColor(phylum){
-        switch(phylum){
-          case "Myxomycota":
-            return "green";
-            break;
-          case "Ascomycota":
-            return "red";
-            break;
-          case "Basidiomycota":
-            return "blue";
-            break;
-          case "Amoebozoa":
-            return "yellow";
-            break;
-          case "Chytridiomycota":
-            return "purple";
-            break;
-          case "Zygomycota":
-            return "orange";
-            break;
-          case "Oomycota":
-            return "pink";
-            break;
-          case "Blastocladiomycota":
-            return "brown";
-            break;
-          default:
-            return "black";
+      
+      //default color type
+      vis.colorType = "phylum";
+      //handle DOT color....duhh
+      vis.handleDotColor = function (data,colorType) {
+        if(colorType == "phylum"){
+          switch(data.phylum){
+            case "Myxomycota":
+              return "green";
+              break;
+            case "Ascomycota":
+              return "red";
+              break;
+            case "Basidiomycota":
+              return "blue";
+              break;
+            case "Amoebozoa":
+              return "yellow";
+              break;
+            case "Chytridiomycota":
+              return "purple";
+              break;
+            case "Zygomycota":
+              return "orange";
+              break;
+            case "Oomycota":
+              return "pink";
+              break;
+            case "Blastocladiomycota":
+              return "brown";
+              break;
+            default:
+              return "black";
+          }
         }
+        else if (colorType == "year"){
+          return data.yearGradientColor;
+        }
+        
         
       }
   
@@ -101,7 +109,7 @@ class LeafletMap {
       vis.Dots = vis.svg.selectAll('circle')
                       .data(vis.data) 
                       .join('circle')
-                          .attr("fill", d => handleDotColor(d.phylum)) 
+                          .attr("fill", d => vis.handleDotColor(d, vis.colorType)) 
                           .attr("stroke", "black")
                           //Leaflet has to take control of projecting points. Here we are feeding the latitude and longitude coordinates to
                           //leaflet so that it can project them on the coordinates of the view. Notice, we have to reverse lat and lon.
@@ -136,7 +144,7 @@ class LeafletMap {
                           .on('mouseleave', function() { //function to add mouseover event
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                                 .duration('150') //how long we are transitioning between the two states (works like keyframes)
-                                .attr("fill", d => handleDotColor(d.phylum)) //change the fill
+                                .attr("fill", d => vis.handleDotColor(d,vis.colorType)) //change the fill
                                 .attr('r', vis.theMap.getZoom() + 1) //change radius
   
                               d3.select('#tooltip-map').style('opacity', 0);//turn off the tooltip
@@ -174,7 +182,8 @@ class LeafletMap {
       vis.Dots
         .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
         .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
-        .attr("r", vis.radiusSize) ;
+        .attr("r", vis.radiusSize)
+        .attr("fill", d => vis.handleDotColor(d,vis.colorType));
   
     }
   
@@ -184,5 +193,14 @@ class LeafletMap {
   
       //not using right now... 
    
+    }
+
+    //HELPER FUNCTIONS BELOW
+
+    //from legend select
+    updateDots(colorType){
+      let vis = this;
+      vis.colorType = colorType;
+      this.updateVis();
     }
   }

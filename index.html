@@ -20,6 +20,14 @@
     </header>
     <!--For Map-->
     <br>
+    <!--Start Map Legend-->
+    <span>Dot color type:
+    <select id="mapCircleColor" onChange="updateMapCircleColor(value)">
+      <option value="none" selected disabled hidden>By Phylum</option><!--Default-->
+      <option value="phylum" >By Phylum</option>
+      <option value="year">By Year</option>
+      <option value="day">By Days into Year</option>
+    </select></span>
     <ul id="phylum-legend" class="legend">
       <li class="legend-btn" category="Myxomycota"><span class="legend-symbol"></span>Myxomycota</li>
       <li class="legend-btn" category="Ascomycota"><span class="legend-symbol"></span>Ascomycota</li>
@@ -31,6 +39,7 @@
       <li class="legend-btn" category="Blastocladiomycota"><span class="legend-symbol"></span>Blastocladiomycota</li>
       <li class="legend-btn" category="Uknown"><span class="legend-symbol"></span>Uknown</li>
     </ul>
+    <!--End Map Legend-->
     <div id="my-map"></div>
 
     <!--For Timeline-->
