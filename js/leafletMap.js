@@ -65,7 +65,7 @@ class LeafletMap {
        vis.svg = vis.overlay.select('svg').attr("pointer-events", "auto")
       
       //default color type
-      vis.colorType = "phylum";
+      vis.colorType = "year";
       //handle DOT color....duhh
       vis.handleDotColor = function (data,colorType) {
         if(colorType == "phylum"){

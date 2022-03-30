@@ -73,7 +73,18 @@ d3.csv('data/processed_fixed.csv')
   })
   .catch(error => console.error(error));
 
-//Select function for Legend
+//on legend change update map dot color
 function updateMapCircleColor(value){
     leafletMap.updateDots(value);
+    
 }
+
+//change displayed legend
+$(document).ready(function(){
+    $('#mapLegend').on('change', function() {
+        $('#year-legend').hide();
+        $('#day-legend').hide();
+        $('#phylum-legend').hide();
+        $('#' + $(this).val() + '-legend').show();
+    });
+});
