@@ -128,3 +128,14 @@ header {
 .legend-btn[category="Uknown"] .legend-symbol {
   background: black;
 }
+
+/*Gradient*/
+#rect1 { fill: url(#Gradient1); }
+              .stop1 { stop-color: rgb(0, 3, 199) }
+              .stop2 { stop-color: rgb(212, 13, 18)}
+              .stop3 { stop-color: rgb(255, 234, 0) }
+
+#rect2 { fill: url(#Gradient2); }
+.stop1 { stop-color: rgb(0, 3, 199) }
+.stop2 { stop-color: rgb(212, 13, 18)}
+.stop3 { stop-color: rgb(255, 234, 0) }

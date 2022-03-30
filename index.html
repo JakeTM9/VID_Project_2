@@ -21,14 +21,44 @@
     <!--For Map-->
     <br>
     <!--Start Map Legend-->
-    <span>Dot color type:
-    <select id="mapCircleColor" onChange="updateMapCircleColor(value)">
-      <option value="none" selected disabled hidden>By Phylum</option><!--Default-->
-      <option value="phylum" >By Phylum</option>
+    <!--Map Legend Select-->
+    <span>Dot Color Type:
+    <select id="mapLegend" onChange="updateMapCircleColor(value)">
+      <option value="none" selected disabled hidden>By Year</option><!--Default-->
       <option value="year">By Year</option>
       <option value="day">By Days into Year</option>
+      <option value="phylum" >By Phylum</option>
     </select></span>
-    <ul id="phylum-legend" class="legend">
+    <!--Year Legend-->
+    <div id="year-legend" >
+      <svg width="800" height="30" >
+        <defs>
+            <linearGradient id="Gradient1">
+              <stop class="stop1" offset="0%"/>
+              <stop class="stop2" offset="50%"/>
+              <stop class="stop3" offset="100%"/>
+            </linearGradient>
+        </defs>
+        <rect id="rect1" x="5" y="5" width="800" height="30"/>
+      </svg>
+      <div id="year-legend-axis"></div>
+    </div>
+    <!--Day Legend-->
+    <div id="day-legend" style="display:none">
+      <svg width="800" height="30" >
+        <defs>
+            <linearGradient id="Gradient2">
+              <stop class="stop1" offset="0%"/>
+              <stop class="stop2" offset="50%"/>
+              <stop class="stop3" offset="100%"/>
+            </linearGradient>
+        </defs>
+        <rect id="rect2" x="5" y="5" width="800" height="30"/>
+      </svg>
+      <div id="day-legend-axis"></div>
+    </div>
+    <!--Phylum Legend-->
+    <ul id="phylum-legend" class="legend" style="display:none">
       <li class="legend-btn" category="Myxomycota"><span class="legend-symbol"></span>Myxomycota</li>
       <li class="legend-btn" category="Ascomycota"><span class="legend-symbol"></span>Ascomycota</li>
       <li class="legend-btn" category="Basidiomycota"><span class="legend-symbol"></span>Basidiomycota</li>
@@ -60,6 +90,9 @@
   <!-- D3 bundle -->
   <script src="js/d3.v6.min.js"></script>
   <script src="js/leaflet.js"></script>
+
+  <!-- JQUERY :)-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
   <!-- Our JS code -->
   <script src="js/main.js"></script>

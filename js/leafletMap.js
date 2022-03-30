@@ -36,6 +36,7 @@ class LeafletMap {
       vis.stAttr = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
   
       //this is the base map layer, where we are showing the map background
+      /*
       vis.base_layer = L.tileLayer(vis.esriUrl, {
         id: 'esri-image',
         attribution: vis.esriAttr,
@@ -44,16 +45,49 @@ class LeafletMap {
         noWrap: true,
         minZoom: 2
         
+      });*/
+
+      vis.ersi = L.tileLayer(vis.esriUrl, {
+        id: 'esri-image',
+        attribution: vis.esriAttr,
+        ext: 'png',
+        continuousWorld: false,
+        noWrap: true,
+        minZoom: 2
       });
+
+      vis.topo = L.tileLayer(vis.topoUrl, {
+        id: 'topo-image',
+        attribution: vis.topoAttr,
+        ext: 'png',
+        continuousWorld: false,
+        noWrap: true,
+        minZoom: 2
+      });
+
+      vis.Stamen = L.tileLayer(vis.stUrl, {
+        id: 'st-image',
+        attribution: vis.stAttr,
+        ext: 'png',
+        continuousWorld: false,
+        noWrap: true,
+        minZoom: 2
+      });
+
+      var allLayers = {"ERSI" : vis.ersi,
+                        "Topographic" : vis.topo,
+                        "Stamen" : vis.Stamen
+                      }
       
       let southWest = L.latLng(-89.98155760646617, -180);
       let northEast = L.latLng(89.99346179538875, 180);
       vis.theMap = L.map('my-map', {
         center: [0,0],
         zoom: 2,
-        layers: [vis.base_layer],
+        layers: [vis.ersi],
         maxBoundsViscosity: 1.0
       });
+      L.control.layers(allLayers,null,{collapsed:false}).addTo(vis.theMap);
       vis.theMap.bounds = []
       vis.theMap.setMaxBounds(L.latLngBounds(southWest, northEast));
   
@@ -65,7 +99,7 @@ class LeafletMap {
        vis.svg = vis.overlay.select('svg').attr("pointer-events", "auto")
       
       //default color type
-      vis.colorType = "phylum";
+      vis.colorType = "year";
       //handle DOT color....duhh
       vis.handleDotColor = function (data,colorType) {
         if(colorType == "phylum"){
@@ -101,8 +135,9 @@ class LeafletMap {
         else if (colorType == "year"){
           return data.yearGradientColor;
         }
-        
-        
+        else if (colorType == "day"){
+          return data.dayGradientColor;
+        }
       }
   
       //these are the city locations, displayed as a set of dots 
