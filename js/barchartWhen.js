@@ -10,11 +10,13 @@ class BarChartWhen {
   
     this.data = _data;
     this.initVis();
+    
     }
 
     initVis() {
         let vis = this;
-        vis.monthList = []
+        vis.monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        vis.monthNum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
         vis.monthCount = new Array(12).fill(0);
         vis.data.forEach(d=> {
@@ -49,13 +51,13 @@ class BarChartWhen {
 
     updateVis() {
         let vis = this;
-        vis.monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] 
+        
         // scales
-        vis.xScale = d3.scaleBand()
+        vis.xScale = d3.scaleLinear()
             .domain([0, d3.max(vis.monthCount)])
             .range([0, vis.width]);
-        vis.yScale = d3.scaleLinear()
-            .domain(vis.monthList) 
+        vis.yScale = d3.scaleBand()
+            .domain(vis.monthNum) 
             .range([0, vis.height]);
 
         // console.log('max count in a month', d3.max(vis.monthCount));
@@ -93,19 +95,19 @@ class BarChartWhen {
 
     renderVis() {
         let vis = this;
-        console.log(vis.monthCount);
-
+        // console.log(vis.monthCount);
+        // console.log(vis.monthNum);
         // Add rectangles
         vis.rect = vis.chart.selectAll('rect')
-            .data(vis.monthCount)
+            .data(vis.monthNum)
             .enter()
             .append('rect')
                 .attr('class', 'bar')
                 .attr('fill', "green")
                 .attr('width', d => vis.monthCount[d])
                 // .attr('height', d => vis.height - vis.yScale(vis.monthCount[d]))
-                .attr('height', 20)
-                .attr('y', d => vis.monthCount[d])
+                .attr('height', vis.yScale.bandwidth())
+                .attr('y', d => vis.yScale(vis.monthNum[d]))
                 .attr('x', 0);
 
         // vis.rect.on('mouseover', (event,d) => {
