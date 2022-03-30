@@ -99,7 +99,7 @@ class LeafletMap {
           }
         }
         else if (colorType == "year"){
-          return "black";
+          return data.yearGradientColor;
         }
         
         
@@ -144,7 +144,7 @@ class LeafletMap {
                           .on('mouseleave', function() { //function to add mouseover event
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                                 .duration('150') //how long we are transitioning between the two states (works like keyframes)
-                                .attr("fill", d => handleDotColor(d.phylum)) //change the fill
+                                .attr("fill", d => vis.handleDotColor(d,vis.colorType)) //change the fill
                                 .attr('r', vis.theMap.getZoom() + 1) //change radius
   
                               d3.select('#tooltip-map').style('opacity', 0);//turn off the tooltip
