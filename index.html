@@ -21,6 +21,7 @@
     <!--For Map-->
     <br>
     <!--Start Map Legend-->
+    <!--Map Legend Select-->
     <span>Dot color type:
     <select id="mapLegend" onChange="updateMapCircleColor(value)">
       <option value="none" selected disabled hidden>By Year</option><!--Default-->
@@ -28,6 +29,7 @@
       <option value="day">By Days into Year</option>
       <option value="phylum" >By Phylum</option>
     </select></span>
+    <!--Year Legend-->
     <div id="year-legend" >
       <svg width="800" height="30" version="1.1" xmlns="http://www.w3.org/2000/svg">
         <defs>
@@ -36,16 +38,16 @@
               <stop class="stop2" offset="50%"/>
               <stop class="stop3" offset="100%"/>
             </linearGradient>
-            <style type="text/css">
-              
-            </style>
         </defs>
         <rect id="rect1" x="5" y="5" width="800" height="30"/>
       </svg>
+      <div id="year-legend-axis"></div>
     </div>
+    <!--Day Legend-->
     <div id="day-legend" style="display:none">
       <p>day legend</p>
     </div>
+    <!--Phylum Legend-->
     <ul id="phylum-legend" class="legend" style="display:none">
       <li class="legend-btn" category="Myxomycota"><span class="legend-symbol"></span>Myxomycota</li>
       <li class="legend-btn" category="Ascomycota"><span class="legend-symbol"></span>Ascomycota</li>

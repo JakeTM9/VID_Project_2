@@ -88,3 +88,22 @@ $(document).ready(function(){
         $('#' + $(this).val() + '-legend').show();
     });
 });
+
+// create svg elementx="5" y="5"
+var svg = d3.select("#year-legend-axis")
+  .append("svg")
+    .attr("width", 850)
+    .attr("height", 30)
+    
+
+// Create the scale
+var x = d3.scaleTime()
+    .domain([new Date("1859-01-01"), new Date("2017-01-01")])         // This is what is written on the Axis: from 0 to 100
+    .range([30, 825]);
+    
+
+// Draw the axis
+svg
+  .append("g")
+  .call(d3.axisBottom(x)
+        .ticks(16));
