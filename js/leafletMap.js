@@ -101,8 +101,9 @@ class LeafletMap {
         else if (colorType == "year"){
           return data.yearGradientColor;
         }
-        
-        
+        else if (colorType == "day"){
+          return data.dayGradientColor;
+        }
       }
   
       //these are the city locations, displayed as a set of dots 

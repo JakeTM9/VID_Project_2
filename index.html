@@ -22,7 +22,7 @@
     <br>
     <!--Start Map Legend-->
     <!--Map Legend Select-->
-    <span>Dot color type:
+    <span>Dot Color Type:
     <select id="mapLegend" onChange="updateMapCircleColor(value)">
       <option value="none" selected disabled hidden>By Year</option><!--Default-->
       <option value="year">By Year</option>
@@ -31,7 +31,7 @@
     </select></span>
     <!--Year Legend-->
     <div id="year-legend" >
-      <svg width="800" height="30" version="1.1" xmlns="http://www.w3.org/2000/svg">
+      <svg width="800" height="30" >
         <defs>
             <linearGradient id="Gradient1">
               <stop class="stop1" offset="0%"/>
@@ -45,7 +45,17 @@
     </div>
     <!--Day Legend-->
     <div id="day-legend" style="display:none">
-      <p>day legend</p>
+      <svg width="800" height="30" >
+        <defs>
+            <linearGradient id="Gradient2">
+              <stop class="stop1" offset="0%"/>
+              <stop class="stop2" offset="50%"/>
+              <stop class="stop3" offset="100%"/>
+            </linearGradient>
+        </defs>
+        <rect id="rect2" x="5" y="5" width="800" height="30"/>
+      </svg>
+      <div id="day-legend-axis"></div>
     </div>
     <!--Phylum Legend-->
     <ul id="phylum-legend" class="legend" style="display:none">
