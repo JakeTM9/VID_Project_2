@@ -52,10 +52,10 @@ class BarChartWhen {
         vis.monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] 
         // scales
         vis.xScale = d3.scaleBand()
-            .domain(vis.monthList)
+            .domain([0, d3.max(vis.monthCount)])
             .range([0, vis.width]);
         vis.yScale = d3.scaleLinear()
-            .domain([d3.max(vis.monthCount), 0])
+            .domain(vis.monthList) 
             .range([0, vis.height]);
 
         // console.log('max count in a month', d3.max(vis.monthCount));
@@ -102,11 +102,11 @@ class BarChartWhen {
             .append('rect')
                 .attr('class', 'bar')
                 .attr('fill', "green")
-                .attr('width', 25)
+                .attr('width', d => vis.monthCount[d])
                 // .attr('height', d => vis.height - vis.yScale(vis.monthCount[d]))
-                .attr('height', d => vis.monthCount[d])
+                .attr('height', 20)
                 .attr('y', d => vis.monthCount[d])
-                .attr('x', d => vis.monthList[d]);
+                .attr('x', 0);
 
         // vis.rect.on('mouseover', (event,d) => {
         //     d3.select('#tooltip')
