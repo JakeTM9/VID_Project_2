@@ -24,6 +24,7 @@ d3.csv('data/processed_fixed.csv')
     // Initialize chart and then show it
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
     timeLine = new TimeLine({ parentElement: '#timeline'}, data);
+    barChartWhen = new BarChartWhen({ parentElement: '#barchartWhen'}, data);
 
 
   })
