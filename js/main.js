@@ -19,7 +19,7 @@ d3.csv('data/processed_fixed.csv')
         }
     });
 
-    console.log(data);//ok, got my data!
+    //console.log(data);//ok, got my data!
 
     // Initialize chart and then show it
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
@@ -28,3 +28,8 @@ d3.csv('data/processed_fixed.csv')
 
   })
   .catch(error => console.error(error));
+
+//Select function for Legend
+function updateMapCircleColor(value){
+    leafletMap.updateDots(value);
+}

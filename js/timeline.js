@@ -101,7 +101,7 @@ class TimeLine {
             vis.yearFrequencyArray.push(i);
         }
         // vis.fullYearArray.sort();
-        console.log('full year array: ', vis.fullYearArray);
+        //console.log('full year array: ', vis.fullYearArray);
         vis.numUniqueYears = 0;
         const getYearFrequency = (yearArray, fullYearArray) => {
             const map = {};
@@ -120,11 +120,11 @@ class TimeLine {
             return map;
         };
         vis.yearFrequency = getYearFrequency(vis.yearArray, vis.fullYearArray);
-        console.log('year frequency: ', vis.yearFrequency)
+        //console.log('year frequency: ', vis.yearFrequency)
         vis.yearArray.forEach(d => {
             vis.yearFrequencyArray.push(vis.yearFrequency[d])
         });
-        console.log('year freq array: ', vis.yearFrequencyArray)
+        //console.log('year freq array: ', vis.yearFrequencyArray)
 
         // set scale domains
         vis.xScale.domain(vis.fullYearArray).paddingInner(0.1);
