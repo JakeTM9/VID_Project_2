@@ -77,8 +77,8 @@ class BarChartWhen {
             .text("Month");
 
         vis.yAxisGroup = vis.chart.append("g")
-            .attr('class', 'axis y-axis')
-            .attr('transform', `translate(0, ${vis.height / 2})`);
+            .attr('class', 'axis y-axis');
+            // .attr('transform', `translate(0, ${vis.height / 2})`);
         vis.yAxisGroup.append("text")
             .attr("y", -35)
             .attr("x", -vis.height / 2 + 25)
@@ -105,8 +105,8 @@ class BarChartWhen {
                 .attr('width', 25)
                 // .attr('height', d => vis.height - vis.yScale(vis.monthCount[d]))
                 .attr('height', d => vis.monthCount[d])
-                .attr('y', d => vis.yScale(vis.monthCount[d] / 2))
-                .attr('x', d => vis.xScale(d));
+                .attr('y', d => vis.monthCount[d])
+                .attr('x', d => vis.monthList[d]);
 
         // vis.rect.on('mouseover', (event,d) => {
         //     d3.select('#tooltip')
