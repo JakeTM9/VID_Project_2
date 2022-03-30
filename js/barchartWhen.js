@@ -25,7 +25,7 @@ class BarChartWhen {
             // console.log(month);
             vis.monthCount[month] = vis.monthCount[month] + 1
         });
-        console.log(vis.monthCount);
+        // console.log(vis.monthCount);
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
@@ -49,13 +49,16 @@ class BarChartWhen {
 
     updateVis() {
         let vis = this;
-
+        vis.monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] 
         // scales
         vis.xScale = d3.scaleBand()
-            .domain([0, d3.max(vis.monthCount)])
+            .domain(vis.monthList)
             .range([0, vis.width]);
         vis.yScale = d3.scaleLinear()
+            .domain([d3.max(vis.monthCount), 0])
             .range([0, vis.height]);
+
+        // console.log('max count in a month', d3.max(vis.monthCount));
 
         // init axis
         vis.xAxis = d3.axisBottom(vis.xScale)
@@ -71,8 +74,7 @@ class BarChartWhen {
             .attr("x", vis.width/2)
             .attr("text-anchor", "right")
             .attr("stroke", "black")
-            .text("Month")
-            .call(vis.xAxis);
+            .text("Month");
 
         vis.yAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
@@ -83,8 +85,7 @@ class BarChartWhen {
             .attr("text-anchor", "end")
             .attr("transform", "rotate(-90)")
             .attr("stroke", "black")
-            .text("Samples per Month")
-            .call(vis.yAxis);
+            .text("Samples per Month");
 
         vis.renderVis();
 
@@ -92,6 +93,7 @@ class BarChartWhen {
 
     renderVis() {
         let vis = this;
+        console.log(vis.monthCount);
 
         // Add rectangles
         vis.rect = vis.chart.selectAll('rect')
@@ -99,29 +101,29 @@ class BarChartWhen {
             .enter()
             .append('rect')
                 .attr('class', 'bar')
-                .attr('fill', )
-                .attr('width', d => vis.xScale.bandwidth())
-                .attr('height', d => vis.height - vis.yScale(vis.yearFrequency[d]))
-                .attr('y', d => vis.yScale(vis.yearFrequency[d] / 2))
+                .attr('fill', "green")
+                .attr('width', 25)
+                // .attr('height', d => vis.height - vis.yScale(vis.monthCount[d]))
+                .attr('height', d => vis.monthCount[d])
+                .attr('y', d => vis.yScale(vis.monthCount[d] / 2))
                 .attr('x', d => vis.xScale(d));
 
-        vis.rect.on('mouseover', (event,d) => {
-            d3.select('#tooltip')
-                .style('display', 'block')
-                .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
-                .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-                .html(`
-                <div class="tooltip-title">${d}</div>
-                <div><i>${vis.yearFrequency[d]} days</i></div>
-                `);
-        })
-        .on('mouseleave', () => {
-            d3.select('#tooltip').style('display', 'none');
-        });
+        // vis.rect.on('mouseover', (event,d) => {
+        //     d3.select('#tooltip')
+        //         .style('display', 'block')
+        //         .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+        //         .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+        //         .html(`
+        //         <div class="tooltip-title">${d}</div>
+        //         <div><i>${vis.yearFrequency[d]} days</i></div>
+        //         `);
+        // })
+        // .on('mouseleave', () => {
+        //     d3.select('#tooltip').style('display', 'none');
+        // });
 
         // Update axis
         vis.xAxisGroup.call(vis.xAxis);
         vis.yAxisGroup.call(vis.yAxis);
-        vis.lowerYAxisGroup.call(vis.lowerYAxis);
     }
 }
