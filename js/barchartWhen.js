@@ -57,7 +57,9 @@ class BarChartWhen {
             .domain([0, d3.max(vis.monthCount)])
             .range([0, vis.width]);
         vis.yScale = d3.scaleBand()
-            .domain(vis.monthNum) 
+            // .domain(vis.monthNum)
+            .paddingInner(0.15)
+            .domain(vis.monthList)  
             .range([0, vis.height]);
 
         // console.log('max count in a month', d3.max(vis.monthCount));
@@ -79,8 +81,9 @@ class BarChartWhen {
             .text("Samples per Month");
 
         vis.yAxisGroup = vis.chart.append("g")
-            .attr('class', 'axis y-axis');
+            .attr('class', 'axis y-axis')
             // .attr('transform', `translate(0, ${vis.height})`);
+            .attr('transform', `translate(0, 75)`);
         vis.yAxisGroup.append("text")
             .attr("y", -35)
             .attr("x", -vis.height / 2 + 25)
@@ -107,7 +110,7 @@ class BarChartWhen {
                 .attr('width', d => vis.xScale(vis.monthCount[d]))
                 // .attr('height', d => vis.height - vis.yScale(vis.monthCount[d]))
                 .attr('height', vis.yScale.bandwidth())
-                .attr('y', d => vis.yScale(vis.monthNum[d]))
+                .attr('y', d => vis.yScale(vis.monthList[d])+75)
                 .attr('x', 0);
 
         vis.rect.on('mouseover', (event,d) => {
