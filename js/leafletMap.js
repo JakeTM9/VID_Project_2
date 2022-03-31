@@ -161,7 +161,10 @@ class LeafletMap {
                               //create a tool tip
                               d3.select('#tooltip-map')
                                   .style('opacity', 1)
+                                  .style('display','block')
                                   .style('z-index', 1000000)
+                                  .style('left', (event.pageX + 10) + 'px')   
+                                  .style('top', (event.pageY + 10) + 'px')
                                     // Format number with million and thousand separator THESE R THE VARS: ${d.city} ${d3.format(',')(d.population)}
                                   .html(`<div class="tooltip-map-label">Collected: ${d.year} <br>
                                                                     Recorded By: ${d.recordedBy} <br>
@@ -172,9 +175,10 @@ class LeafletMap {
                             })
                           .on('mousemove', (event) => {
                               //position the tooltip
-                              d3.select('#tooltip-map')
-                               .style('left', (event.pageX + 10) + 'px')   
-                                .style('top', (event.pageY + 10) + 'px');
+                              
+                            
+                               
+                              
                            })              
                           .on('mouseleave', function() { //function to add mouseover event
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
@@ -182,7 +186,8 @@ class LeafletMap {
                                 .attr("fill", d => vis.handleDotColor(d,vis.colorType)) //change the fill
                                 .attr('r', vis.theMap.getZoom() + 1) //change radius
   
-                              d3.select('#tooltip-map').style('opacity', 0);//turn off the tooltip
+                                d3.select('#tooltip-map')
+                                  .style('display','none');
   
                             })
                           .on('click', (event, d) => { //experimental feature I was trying- click on point and then fly to it
