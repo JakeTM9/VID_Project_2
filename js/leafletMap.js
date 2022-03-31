@@ -189,7 +189,8 @@ class LeafletMap {
                                                                     Recorded By: ${d.recordedBy} <br>
                                                                     Kingdom: ${d.kingdom} <br>
                                                                     Phylum: ${d.phylum} <br>
-                                                                    Habitat: ${d.habitat}</div>`);
+                                                                    Habitat: ${d.habitat}</div>
+                                                                    <a href="${d.references}" target="_blank">Database Entry</a>`);
 
                               vis.tooltipLeft = event.pageX + 1;
                               vis.tooltipTop = event.pageY + 1;
