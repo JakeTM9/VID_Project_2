@@ -44,8 +44,6 @@ class BarChartWhen {
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left}, ${transformheight})`);
 
-        
-
         vis.updateVis();
     }
 
@@ -98,7 +96,7 @@ class BarChartWhen {
 
     renderVis() {
         let vis = this;
-        console.log('Counts for each month:', vis.monthCount);
+        // console.log('Counts for each month:', vis.monthCount);
         // console.log(vis.monthNum);
         // Add rectangles
         vis.rect = vis.chart.selectAll('rect')
@@ -119,8 +117,8 @@ class BarChartWhen {
                 .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
-                <div class="tooltip-title">${d}</div>
-                <div><i>${vis.monthCount[d]} days</i></div>
+                <div class="tooltip-title">${vis.monthList[d]}</div>
+                <div><i>${vis.monthCount[d]} specimens collected</i></div>
                 `);
         })
         .on('mouseleave', () => {

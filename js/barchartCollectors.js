@@ -18,9 +18,9 @@ class barchartCollectors {
     initVis() {
         let vis = this;
         
-        vis.data.forEach(d =>{
-            console.log(d.recordedBy)
-        })
+        // vis.data.forEach(d =>{
+        //     console.log(d.recordedBy)
+        // })
         
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
