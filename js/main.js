@@ -63,6 +63,11 @@ d3.csv('data/processed_fixed.csv')
             d.longitude = 100000000000000000000;
         }
 
+        //for tooltips
+        if(d.kingdom === "null") {d.kingdom = "uknown";}
+        if(d.phylum === "null") {d.phylum = "uknown";}
+        if(d.habitat === "null") {d.habitat = "uknown";}
+
         //start gradient year/month/day stuff
         //this is just an if statement, finds the day from eventDate if d.day doesnt work out
         (d.day === "null") ? d.day = Math.abs(+d.eventDate.slice(-2)) : d.day = +d.day; //abs in case it reads in a dash and then is negative
