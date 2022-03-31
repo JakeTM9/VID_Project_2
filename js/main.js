@@ -90,7 +90,7 @@ d3.csv('data/processed_fixed.csv')
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
     timeLine = new TimeLine({ parentElement: '#timeline'}, data);
     barChartWhen = new BarChartWhen({ parentElement: '#barchartWhen'}, data);
-
+    barChartCollectors = new barchartCollectors({parentElement: '#barchartCollectors'}, data)
 
   })
   .catch(error => console.error(error));
