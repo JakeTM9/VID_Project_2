@@ -139,6 +139,25 @@ class LeafletMap {
           return data.dayGradientColor;
         }
       }
+
+      //Jakob's epic solution to clickling on links in a tooltip
+      vis.tooltipLeft = 0;
+      vis.tooltipTop = 0;
+      vis.checkTooltipClose = function(event) {
+        var cursor_x = event.pageX;
+        var cursor_y = event.pageY;
+        let tooltip = document.querySelector('#tooltip-map');
+        let width = tooltip.offsetWidth;
+        let height = tooltip.offsetHeight;
+        onmousemove = function(e) { 
+          cursor_x = e.pageX;
+          cursor_y = e.pageY;
+          if (!(cursor_x > vis.tooltipLeft - 10 && cursor_x < vis.tooltipLeft + width && cursor_y > vis.tooltipTop - 10 && cursor_y < vis.tooltipTop + height) ){
+            d3.select('#tooltip-map')
+            .style('display','none');
+          }
+        }        
+      }
   
       //these are the city locations, displayed as a set of dots 
       vis.Dots = vis.svg.selectAll('circle')
@@ -156,21 +175,24 @@ class LeafletMap {
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                                 .duration('150') //how long we are transitioning between the two states (works like keyframes)
                                 /*.attr("fill", "white") *///change the fill
-                                .attr('r', vis.theMap.getZoom() + 10); //change radius
+                                .attr('r', vis.theMap.getZoom() + 3); //change radius
   
                               //create a tool tip
                               d3.select('#tooltip-map')
                                   .style('opacity', 1)
                                   .style('display','block')
                                   .style('z-index', 1000000)
-                                  .style('left', (event.pageX + 10) + 'px')   
-                                  .style('top', (event.pageY + 10) + 'px')
+                                  .style('left', (event.pageX + 1) + 'px')   
+                                  .style('top', (event.pageY + 1) + 'px')
                                     // Format number with million and thousand separator THESE R THE VARS: ${d.city} ${d3.format(',')(d.population)}
                                   .html(`<div class="tooltip-map-label">Collected: ${d.year} <br>
                                                                     Recorded By: ${d.recordedBy} <br>
                                                                     Kingdom: ${d.kingdom} <br>
                                                                     Phylum: ${d.phylum} <br>
                                                                     Habitat: ${d.habitat}</div>`);
+
+                              vis.tooltipLeft = event.pageX + 1;
+                              vis.tooltipTop = event.pageY + 1;
   
                             })
                           .on('mousemove', (event) => {
@@ -180,14 +202,12 @@ class LeafletMap {
                                
                               
                            })              
-                          .on('mouseleave', function() { //function to add mouseover event
+                          .on('mouseleave', function(event) { //function to add mouseover event
                               d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
                                 .duration('150') //how long we are transitioning between the two states (works like keyframes)
                                 .attr("fill", d => vis.handleDotColor(d,vis.colorType)) //change the fill
                                 .attr('r', vis.theMap.getZoom() + 1) //change radius
-  
-                                d3.select('#tooltip-map')
-                                  .style('display','none');
+                                vis.checkTooltipClose(event);
   
                             })
                           .on('click', (event, d) => { //experimental feature I was trying- click on point and then fly to it
