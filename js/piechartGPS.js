@@ -1,4 +1,4 @@
-class BarChartSmall2 {
+class PieChartGPS {
     constructor(_config, _data) {
         this.config = {
             parentElement: _config.parentElement,
@@ -16,18 +16,17 @@ class BarChartSmall2 {
     initVis(){
         let vis = this;
 
-        vis.categories = ["Total", "With Event Date", "Without Event Date"];
+        vis.categories = ["Total", "With GPS", "Without GPS"];
 
         vis.totalSpecimens = d3.count(vis.data, d => d.id);
-        vis.haveDate = d3.count(vis.data, d => d.eventDate);
-        vis.noDate = vis.totalSpecimens - vis.haveDate;
+        vis.haveGPS = d3.count(vis.data, d => d.decimalLatitude);
+        vis.noGPS = vis.totalSpecimens - vis.haveGPS;
 
-        vis.barchartData = [vis.totalSpecimens, vis.haveDate, vis.noDate];
+        vis.barchartData = [vis.totalSpecimens, vis.haveGPS, vis.noGPS];
+        // console.log('Barchart data:', vis.barchartData);
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
-        vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
-        vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
-        vis.chartWidth = vis.width / 2 - 30;
+        vis.radius = d3.min(vis.config.containerWidth, vis.config.containerHeight) / 2 - vis.config.margin.top;
 
         // // Define size of SVG drawing area
         vis.svg = d3.select(vis.config.parentElement)
@@ -55,6 +54,11 @@ class BarChartSmall2 {
             .domain(vis.categories)  
             .range([0, vis.height]);
 
+        // set the color scale
+        vis.color = d3.scaleOrdinal()
+            .domain(vis.data)
+            .range(d3.schemeSet2);
+
         // console.log('max count in a month', d3.max(vis.monthCount));
 
         // init axis
@@ -71,14 +75,14 @@ class BarChartSmall2 {
             .attr("x", vis.width/2)
             .attr("text-anchor", "right")
             .attr("stroke", "black")
-            .text("Counts of Specimens");
+            .text("Counts of Collections");
 
         vis.yAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
             // .attr('transform', `translate(0, ${vis.height})`);
             .attr('transform', `translate(0, 75)`);
         vis.yAxisGroup.append("text")
-            .attr("y", -100)
+            .attr("y", -70)
             .attr("x", -vis.height / 2 + 50)
             .attr("text-anchor", "end")
             .attr("transform", "rotate(-90)")

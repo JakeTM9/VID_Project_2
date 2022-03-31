@@ -1,4 +1,4 @@
-class BarChartSmall1 {
+class PieChartDate {
     constructor(_config, _data) {
         this.config = {
             parentElement: _config.parentElement,
@@ -16,14 +16,13 @@ class BarChartSmall1 {
     initVis(){
         let vis = this;
 
-        vis.categories = ["Total", "With GPS", "Without GPS"];
+        vis.categories = ["Total", "With Event Date", "Without Event Date"];
 
         vis.totalSpecimens = d3.count(vis.data, d => d.id);
-        vis.haveGPS = d3.count(vis.data, d => d.decimalLatitude);
-        vis.noGPS = vis.totalSpecimens - vis.haveGPS;
+        vis.haveDate = d3.count(vis.data, d => d.eventDate);
+        vis.noDate = vis.totalSpecimens - vis.haveDate;
 
-        vis.barchartData = [vis.totalSpecimens, vis.haveGPS, vis.noGPS];
-        // console.log('Barchart data:', vis.barchartData);
+        vis.barchartData = [vis.totalSpecimens, vis.haveDate, vis.noDate];
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
@@ -72,14 +71,14 @@ class BarChartSmall1 {
             .attr("x", vis.width/2)
             .attr("text-anchor", "right")
             .attr("stroke", "black")
-            .text("Counts of Collections");
+            .text("Counts of Specimens");
 
         vis.yAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
             // .attr('transform', `translate(0, ${vis.height})`);
             .attr('transform', `translate(0, 75)`);
         vis.yAxisGroup.append("text")
-            .attr("y", -70)
+            .attr("y", -100)
             .attr("x", -vis.height / 2 + 50)
             .attr("text-anchor", "end")
             .attr("transform", "rotate(-90)")
