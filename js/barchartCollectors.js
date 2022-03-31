@@ -17,7 +17,7 @@ class barchartCollectors {
 
     initVis() {
         let vis = this;
-        //START DATA PROCESSING
+        //START DATA PROCESSING -------------------------------------------------------------------------------------------------------------------------
         vis.collectionsByPerson = {
         }
         //this is how we do it
@@ -46,9 +46,7 @@ class barchartCollectors {
             vis.People.push(d[0]);
             vis.Collections.push(+d[1]);
         })
-        console.log(vis.Collections);
-        console.log(d3.max(vis.Collections));
-        //END DATA PROCESSING
+        //END DATA PROCESSING ------------------------------------------------------------------------------------------------------------------------------
 
         //console.log(vis.collectionsByPerson);
         
