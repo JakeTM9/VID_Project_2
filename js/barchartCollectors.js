@@ -17,21 +17,48 @@ class barchartCollectors {
 
     initVis() {
         let vis = this;
-        
-        // vis.data.forEach(d =>{
-        //     console.log(d.recordedBy)
-        // })
+        //START DATA PROCESSING -------------------------------------------------------------------------------------------------------------------------
+        vis.collectionsByPerson = {
+        }
+        //this is how we do it
+        vis.data.forEach(d =>{
+            if (vis.collectionsByPerson.hasOwnProperty(d.recordedBy)){
+                vis.collectionsByPerson[d.recordedBy] += 1;
+            }
+            else{
+                vis.collectionsByPerson[d.recordedBy] = 1;
+            }
+        });
+        //credit: https://stackoverflow.com/questions/25500316/sort-a-dictionary-by-value-in-javascript
+        // Create items array
+        var items = Object.keys(vis.collectionsByPerson).map(function(key) {
+            return [key, vis.collectionsByPerson[key]];
+        });
+        // Sort the array based on the second element
+        items.sort(function(first, second) {
+            return second[1] - first[1];
+        });
+        vis.collectionsByPerson = items.slice(0,10);
+        vis.People = []
+        vis.Collections = []
+        vis.collectionsByPerson.forEach(d => {
+            console.log(d);
+            vis.People.push(d[0]);
+            vis.Collections.push(+d[1]);
+        })
+        //END DATA PROCESSING ------------------------------------------------------------------------------------------------------------------------------
+
+        //console.log(vis.collectionsByPerson);
         
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
     
         vis.xScale = d3.scaleLinear()
-            .domain([0,100])
+            .domain([0,d3.max(vis.Collections)])
             .range([0, vis.width]);
         
-        let QualityGrades = ["Good", "Moderate", "Slightly Unhealthy", "Unhealthy", "Very Unhealthy", "Hazardous"];
         vis.yScale = d3.scaleBand()
-          .domain(QualityGrades)
+          .domain(vis.People)
           .range([0, vis.height])
           .paddingInner(0.15);
 
@@ -89,6 +116,9 @@ class barchartCollectors {
         .attr("x", -vis.config.margin.top -20 )
         .attr("font-size","20px")
         .text("Collector");
+
+        vis.startYear = null;
+        vis.endYear = null;
         vis.updateVis();
 
     }
@@ -98,6 +128,9 @@ class barchartCollectors {
      */
     updateVis() {
         let vis = this;
+        if(vis.startYear !== null && vis.endYear !== null){
+
+        }
         /*
         vis.xValue = d => d.Good;
         vis.yValue = d => d.MaxAQI;
@@ -118,56 +151,16 @@ class barchartCollectors {
 
         //remove old
         vis.chart.selectAll("rect").remove();
-        /*
-        vis.chart.append("rect")
-            .data([vis.data])
-            .attr('class', 'chart-bar')
-            .attr('width', d => vis.xScale(d.Good))
-            .attr('height', vis.yScale.bandwidth())
-            .attr('y', vis.yScale("Good"))
-            .attr('x',0);
 
-            vis.chart.append("rect")
-            .data([vis.data])
-            .attr('class', 'chart-bar2')
-            .attr('width', d => vis.xScale(d.Moderate))
-            .attr('height', vis.yScale.bandwidth())
-            .attr('y', vis.yScale("Moderate"))
-            .attr('x',0);
-
-            vis.chart.append("rect")
-            .data([vis.data])
-            .attr('class', 'chart-bar3')
-            .attr('width', d => vis.xScale(d.UnhelathySensitive))
-            .attr('height', vis.yScale.bandwidth())
-            .attr('y', vis.yScale("Slightly Unhealthy"))
-            .attr('x',0);
-        
-            vis.chart.append("rect")
-            .data([vis.data])
-            .attr('class', 'chart-bar4')
-            .attr('width', d => vis.xScale(d.Unhealthy))
-            .attr('height', vis.yScale.bandwidth())
-            .attr('y', vis.yScale("Unhealthy"))
-            .attr('x',0);
-
-            vis.chart.append("rect")
-            .data([vis.data])
-            .attr('class', 'chart-bar5')
-            .attr('width', d => vis.xScale(d.VeryUnhealthy))
-            .attr('height', vis.yScale.bandwidth())
-            .attr('y', vis.yScale("Very Unhealthy"))
-            .attr('x',0);
-
-            vis.chart.append("rect")
-            .data([vis.data])
-            .attr('class', 'chart-bar6')
-            .attr('width', d => vis.xScale(d.Hazardous))
-            .attr('height', vis.yScale.bandwidth())
-            .attr('y', vis.yScale("Hazardous"))
-            .attr('x',0);
-        
-        */
+        vis.rect = vis.chart.selectAll('rect')
+            .data(vis.collectionsByPerson)
+            .enter()
+            .append('rect')
+                .attr('class', 'barCollector')
+                .attr('width',d => vis.xScale(d[1]))
+                .attr('height', vis.yScale.bandwidth())
+                .attr('y', d => vis.yScale(d[0]))
+                .attr('x', 0);
 
         // Update the axes
         vis.xAxisG.call(vis.xAxis);
