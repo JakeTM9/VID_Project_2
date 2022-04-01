@@ -9,7 +9,8 @@ class BarChartCollectors {
           parentElement: _config.parentElement,
           containerWidth: _config.containerWidth || 600,
           containerHeight: _config.containerHeight || 250,
-          margin: _config.margin || {top: 25, right: 30, bottom: 60, left: 150}
+          margin: _config.margin || {top: 25, right: 30, bottom: 60, left: 150},
+          tooltipPadding: _config.tooltipPadding || 15
         }
         this.data = _data;
         this.initVis();
@@ -103,9 +104,9 @@ class BarChartCollectors {
         //axes titles
         vis.chart.append("text")
         .attr("text-anchor", "end")
-        .attr("x", vis.width/2)
+        .attr("x", vis.width/2 + vis.config.margin.left / 2)
         .attr("y", vis.height +50)
-        .attr("font-size","20px")
+        .attr("stroke", "black")
         .text("Number of Collections");
 
         vis.chart.append("text")
@@ -113,7 +114,7 @@ class BarChartCollectors {
         .attr("transform", "rotate(-90)")
         .attr("y", -vis.config.margin.left +20)
         .attr("x", -vis.config.margin.top -20 )
-        .attr("font-size","20px")
+        .attr("stroke", "black")
         .text("Collector");
 
         vis.startYear = null;
@@ -218,6 +219,26 @@ class BarChartCollectors {
                 .attr('height', vis.yScale.bandwidth())
                 .attr('y', d => vis.yScale(d[0]))
                 .attr('x', 0);
+
+        vis.rect.on('mouseover', (event,d) => {
+            d3.select('#tooltip')
+                .style('display', 'block')
+                .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+                .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                .html(`
+                <div class="tooltip-title">${d[0]} has ${d[1]} Collections</div>
+                `);
+        })
+        .on('mouseleave', () => {
+            d3.select('#tooltip').style('display', 'none');
+        });
+
+        // add title
+        vis.chart.append("text")
+            .attr("x", (vis.config.containerWidth / 2 - vis.config.margin.left / 2 - 30))
+            .attr("y", - vis.config.margin.top / 2)
+            .attr("text-anchor", "middle")
+            .text("Collections per Collector")
 
         // Update the axes
         vis.xAxisG.call(vis.xAxis);
