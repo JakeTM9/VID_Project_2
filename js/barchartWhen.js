@@ -32,7 +32,6 @@ class BarChartWhen {
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
-        vis.chartWidth = vis.width / 2 - 30;
 
         // // Define size of SVG drawing area
         vis.svg = d3.select(vis.config.parentElement)
