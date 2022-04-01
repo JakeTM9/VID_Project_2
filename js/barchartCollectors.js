@@ -142,7 +142,6 @@ class barchartCollectors {
                 }
                 
             });
-            console.log(vis.collectionsByPerson);
             //credit: https://stackoverflow.com/questions/25500316/sort-a-dictionary-by-value-in-javascript
             // Create items array
             var items = Object.keys(vis.collectionsByPerson).map(function(key) {
@@ -159,6 +158,17 @@ class barchartCollectors {
                 vis.People.push(d[0]);
                 vis.Collections.push(+d[1]);
             })
+            //fix bug
+            if(vis.People.length < 10){
+                while(vis.People.length < 10){
+                    vis.People.push("Joe Mama");
+                    vis.Collections.push(0);
+                    vis.collectionsByPerson.push({
+                        0: "Joe Mama",
+                        1: 0
+                    });
+                }
+            }
             //fix scales and axis
             vis.yScale = d3.scaleBand()
                 .domain(vis.People)
@@ -173,6 +183,11 @@ class barchartCollectors {
             .ticks(6)
             .tickSizeOuter(0)
             .tickPadding(10);
+
+            vis.yAxis = d3.axisLeft(vis.yScale)
+            .ticks(6)
+            .tickSizeOuter(0)
+            .tickPadding(10)
         }
         /*
         vis.xValue = d => d.Good;
