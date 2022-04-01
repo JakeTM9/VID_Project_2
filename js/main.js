@@ -94,8 +94,8 @@ d3.csv('data/processed_fixed.csv')
     barChartCollectors = new BarChartCollectors({parentElement: '#barchartCollectors'}, data);
     barChartClasses = new BarChartClasses({parentElement: '#barchartClasses'}, data);
     
-    pieChartGPS = new PieChartGPS({parentElement: '#piechartGPS'}, data);
-    pieChartDate = new PieChartDate({parentElement: '#piechartDate'}, data);
+    pieChartGPS = new PieChartGPS({parentElement: '#piechart'}, data);
+    pieChartDate = new PieChartDate({parentElement: '#piechart'}, data);
 
   })
   .catch(error => console.error(error));
