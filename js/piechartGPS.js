@@ -23,7 +23,6 @@ class PieChartGPS {
         vis.noGPS = vis.totalSpecimens - vis.haveGPS;
 
         vis.barchartData = [vis.totalSpecimens, vis.haveGPS, vis.noGPS];
-        // console.log('Barchart data:', vis.barchartData);
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.radius = vis.config.containerHeight / 2 - vis.config.margin.top;
@@ -34,9 +33,8 @@ class PieChartGPS {
             .attr('height', vis.config.containerHeight);
 
         // // Append group element that will contain our actual chart (see margin convention)
-        const transformheight = - vis.config.margin.top 
-        vis.svg.append('g')
-            // .attr('transform', 'translate(" + vis.config.containerWidth / 2 + "," + vis.config.containerHeight / 2 + ")');
+        vis.chart = vis.svg.append('g')
+            .attr('transform', `translate(${vis.config.containerWidth / 4}, ${vis.config.containerHeight / 2})`)
 
         vis.updateVis();
     }
@@ -51,16 +49,13 @@ class PieChartGPS {
             .range(d3.schemeSet2);
 
         // Compute the position of each group on the pie:
-        vis.pie = d3.pie()
-            .value(function(d) {return d.value; });
-        // vis.data_ready = vis.pie(d3.entries(vis.barchartData));
+        vis.pie = d3.pie();
+        vis.data_ready = vis.pie(vis.barchartData);
 
         // shape helper to build arcs:
         vis.arcGenerator = d3.arc()
             .innerRadius(0)
             .outerRadius(vis.radius);
-
-        
 
         vis.renderVis();
     }
@@ -68,12 +63,16 @@ class PieChartGPS {
     renderVis(){
         let vis = this;
 
-        vis.svg.selectAll('mySlices')
-            .data(vis.barchartData)
+        vis.chart.selectAll('mySlices')
+            .data(vis.data_ready)
             .enter()
             .append('path')
-                .attr('d', vis.arcGenerator)
-                .attr('fill', function(d){ return(color(d.barchartData.key)) })
+                // .attr('d', vis.arcGenerator)
+                .attr('d', d3.arc()
+                    .innerRadius(0)
+                    .outerRadius(vis.radius)
+                )
+                .attr('fill', function(d, i){ return(vis.color(i)) })
                 .attr("stroke", "black")
                 .style("stroke-width", "2px")
                 .style("opacity", 0.7);
@@ -91,9 +90,5 @@ class PieChartGPS {
         // .on('mouseleave', () => {
         //     d3.select('#tooltip').style('display', 'none');
         // });
-
-        // Update axis
-        vis.xAxisGroup.call(vis.xAxis);
-        vis.yAxisGroup.call(vis.yAxis);
     }
 }

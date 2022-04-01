@@ -25,6 +25,9 @@ class PieChartDate {
         vis.barchartData = [vis.totalSpecimens, vis.haveDate, vis.noDate];
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
+        vis.radius = vis.config.containerHeight / 2 - vis.config.margin.top;
+
+        //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
         vis.height = vis.config.containerHeight - vis.config.margin.top - vis.config.margin.bottom;
         vis.chartWidth = vis.width / 2 - 30;
@@ -35,9 +38,8 @@ class PieChartDate {
             .attr('height', vis.config.containerHeight);
 
         // // Append group element that will contain our actual chart (see margin convention)
-        const transformheight = - vis.config.margin.top 
         vis.chart = vis.svg.append('g')
-            .attr('transform', `translate(${vis.config.margin.left}, ${transformheight})`);
+            .attr('transform', `translate(${vis.config.containerWidth / 4 + vis.config.containerWidth / 2}, ${vis.config.containerHeight / 2})`)
 
         vis.updateVis();
     }
@@ -46,44 +48,19 @@ class PieChartDate {
         let vis = this;
 
         // scales
-        vis.xScale = d3.scaleLinear()
-            .domain([0, d3.max(vis.barchartData)])
-            .range([0, vis.width]);
-        vis.yScale = d3.scaleBand()
-            // .domain(vis.monthNum)
-            .paddingInner(0.15)
-            .domain(vis.categories)  
-            .range([0, vis.height]);
+        // set the color scale
+        vis.color = d3.scaleOrdinal()
+            .domain(vis.data)
+            .range(d3.schemeSet2);
 
-        // console.log('max count in a month', d3.max(vis.monthCount));
+        // Compute the position of each group on the pie:
+        vis.pie = d3.pie();
+        vis.data_ready = vis.pie(vis.barchartData);
 
-        // init axis
-        vis.xAxis = d3.axisBottom(vis.xScale)
-            // .tickFormat(d3.format("d")); // Remove thousand comma
-        vis.yAxis = d3.axisLeft(vis.yScale);
-
-        // init axis groups
-        vis.xAxisGroup = vis.chart.append("g")
-            .attr('class', 'axis x-axis')
-            .attr('transform', `translate(0, ${vis.height+75})`);
-        vis.xAxisGroup.append("text")
-            .attr("y", 50)
-            .attr("x", vis.width/2)
-            .attr("text-anchor", "right")
-            .attr("stroke", "black")
-            .text("Counts of Specimens");
-
-        vis.yAxisGroup = vis.chart.append("g")
-            .attr('class', 'axis y-axis')
-            // .attr('transform', `translate(0, ${vis.height})`);
-            .attr('transform', `translate(0, 75)`);
-        vis.yAxisGroup.append("text")
-            .attr("y", -100)
-            .attr("x", -vis.height / 2 + 50)
-            .attr("text-anchor", "end")
-            .attr("transform", "rotate(-90)")
-            .attr("stroke", "black")
-            .text("Specimen Collection Stats");
+        // shape helper to build arcs:
+        vis.arcGenerator = d3.arc()
+            .innerRadius(0)
+            .outerRadius(vis.radius);
 
         vis.renderVis();
     }
@@ -91,36 +68,32 @@ class PieChartDate {
     renderVis(){
         let vis = this;
 
-        // console.log(vis.monthNum);
-        // Add rectangles
-        vis.rect = vis.chart.selectAll('rect')
-            .data([0, 1, 2])
+        vis.chart.selectAll('mySlices')
+            .data(vis.data_ready)
             .enter()
-            .append('rect')
-                .attr('class', 'bar')
-                .attr('fill', "green")
-                .attr('width', d => vis.xScale(vis.barchartData[d]))
-                // .attr('height', d => vis.height - vis.yScale(vis.monthCount[d]))
-                .attr('height', vis.yScale.bandwidth())
-                .attr('y', d => vis.yScale(vis.categories[d])+75)
-                .attr('x', 0);
+            .append('path')
+                // .attr('d', vis.arcGenerator)
+                .attr('d', d3.arc()
+                    .innerRadius(0)
+                    .outerRadius(vis.radius)
+                )
+                .attr('fill', function(d, i){ return(vis.color(i)) })
+                .attr("stroke", "black")
+                .style("stroke-width", "2px")
+                .style("opacity", 0.7);
 
-        vis.rect.on('mouseover', (event,d) => {
-            d3.select('#tooltip')
-                .style('display', 'block')
-                .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
-                .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-                .html(`
-                <div class="tooltip-title">${vis.categories[d]}</div>
-                <div><i>${vis.barchartData[d]} Specimens</i></div>
-                `);
-        })
-        .on('mouseleave', () => {
-            d3.select('#tooltip').style('display', 'none');
-        });
-
-        // Update axis
-        vis.xAxisGroup.call(vis.xAxis);
-        vis.yAxisGroup.call(vis.yAxis);
+        // vis.rect.on('mouseover', (event,d) => {
+        //     d3.select('#tooltip')
+        //         .style('display', 'block')
+        //         .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+        //         .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+        //         .html(`
+        //         <div class="tooltip-title">${vis.categories[d]}</div>
+        //         <div><i>${vis.barchartData[d]} Specimens</i></div>
+        //         `);
+        // })
+        // .on('mouseleave', () => {
+        //     d3.select('#tooltip').style('display', 'none');
+        // });
     }
 }
