@@ -158,7 +158,7 @@ class TimeLine {
         //brushing
         vis.isBrush = false;
         vis.svg.brush = d3.brush().extent([[vis.config.margin.left,vis.config.margin.top],[vis.width + vis.config.margin.left,vis.height + vis.config.margin.top]])
-            .on("start brush end", brushed);
+            .on("end", brushed);
         
 
         //brush stuuf
@@ -177,8 +177,7 @@ class TimeLine {
                 let startYear = getYear(x0 - vis.config.margin.left);
                 let endYear = getYear(x1 - vis.config.margin.left);
                 //y is irrelevent kek;
-                console.log(startYear);
-                console.log(endYear);
+                filterGraphsByYear(startYear,endYear);
             }
             
         }

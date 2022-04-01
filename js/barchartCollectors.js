@@ -128,7 +128,51 @@ class barchartCollectors {
     updateVis() {
         let vis = this;
         if(vis.startYear !== null && vis.endYear !== null){
+            console.log(vis.startYear);
+            vis.collectionsByPerson = {
+            }
+            //this is how we do it
+            //2 extra iffs is how we filter by years
+            vis.data.forEach(d =>{
+                if (vis.collectionsByPerson.hasOwnProperty(d.recordedBy) && (d.year >= vis.startYear && d.year <= vis.endYear)){
+                    vis.collectionsByPerson[d.recordedBy] += 1;
+                }
+                else if ((d.year >= vis.startYear && d.year <= vis.endYear)){
+                    vis.collectionsByPerson[d.recordedBy] = 1;
+                }
+                
+            });
+            console.log(vis.collectionsByPerson);
+            //credit: https://stackoverflow.com/questions/25500316/sort-a-dictionary-by-value-in-javascript
+            // Create items array
+            var items = Object.keys(vis.collectionsByPerson).map(function(key) {
+                return [key, vis.collectionsByPerson[key]];
+            });
+            // Sort the array based on the second element
+            items.sort(function(first, second) {
+                return second[1] - first[1];
+            });
+            vis.collectionsByPerson = items.slice(0,10);
+            vis.People = []
+            vis.Collections = []
+            vis.collectionsByPerson.forEach(d => {
+                vis.People.push(d[0]);
+                vis.Collections.push(+d[1]);
+            })
+            //fix scales and axis
+            vis.yScale = d3.scaleBand()
+                .domain(vis.People)
+                .range([0, vis.height])
+                .paddingInner(0.15);
+            
+            vis.xScale = d3.scaleLinear()
+                .domain([0,d3.max(vis.Collections)])
+                .range([0, vis.width]);
 
+            vis.xAxis = d3.axisBottom(vis.xScale)
+            .ticks(6)
+            .tickSizeOuter(0)
+            .tickPadding(10);
         }
         /*
         vis.xValue = d => d.Good;
@@ -164,6 +208,13 @@ class barchartCollectors {
         // Update the axes
         vis.xAxisG.call(vis.xAxis);
         vis.yAxisG.call(vis.yAxis);
+    }
+
+    updateByYear(yearFrom,yearTo){
+        let vis = this;
+        vis.startYear = yearFrom;
+        vis.endYear = yearTo;
+        vis.updateVis();
     }
     
 }
