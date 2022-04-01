@@ -89,8 +89,6 @@ d3.csv('data/processed_fixed.csv')
     // Initialize chart and then show it
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
     timeLine = new TimeLine({ parentElement: '#timeline'}, data);
-    barChartWhen = new BarChartWhen({ parentElement: '#barchartWhen'}, data);
-    barChartCollectors = new barchartCollectors({parentElement: '#barchartCollectors'}, data);
 
     pieChartGPS = new PieChartGPS({parentElement: '#piechart'}, data);
     pieChartDate = new PieChartDate({parentElement: '#piechart'}, data);
@@ -147,3 +145,8 @@ svgDay
   .append("g")
   .call(d3.axisBottom(x)
         .ticks(32));
+
+//update with filtered time
+function filterGraphsByYear(yearFrom, yearTo){
+    barChartCollectors.updateByYear(yearFrom,yearTo);
+}
