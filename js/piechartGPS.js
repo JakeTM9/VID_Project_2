@@ -16,13 +16,13 @@ class PieChartGPS {
     initVis(){
         let vis = this;
 
-        vis.categories = ["With GPS", "Without GPS"];
+        vis.categories = ["Total", "With GPS", "Without GPS"];
 
         vis.totalSpecimens = d3.count(vis.data, d => d.id);
         vis.haveGPS = d3.count(vis.data, d => d.decimalLatitude);
         vis.noGPS = vis.totalSpecimens - vis.haveGPS;
 
-        vis.pieData = [vis.haveGPS, vis.noGPS];
+        vis.barchartData = [vis.totalSpecimens, vis.haveGPS, vis.noGPS];
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.radius = vis.config.containerHeight / 2 - vis.config.margin.top;
@@ -50,7 +50,7 @@ class PieChartGPS {
 
         // Compute the position of each group on the pie:
         vis.pie = d3.pie();
-        vis.data_ready = vis.pie(vis.pieData);
+        vis.data_ready = vis.pie(vis.barchartData);
 
         // shape helper to build arcs:
         vis.arcGenerator = d3.arc()
@@ -63,10 +63,11 @@ class PieChartGPS {
     renderVis(){
         let vis = this;
 
-        vis.slices = vis.chart.selectAll('mySlices')
+        vis.chart.selectAll('mySlices')
             .data(vis.data_ready)
             .enter()
             .append('path')
+                // .attr('d', vis.arcGenerator)
                 .attr('d', d3.arc()
                     .innerRadius(0)
                     .outerRadius(vis.radius)
@@ -76,25 +77,18 @@ class PieChartGPS {
                 .style("stroke-width", "2px")
                 .style("opacity", 0.7);
 
-        vis.slices.on('mouseover', (event,d) => {
-            console.log('tooltip d: ', d)
-            d3.select('#tooltip')
-                .style('display', 'block')
-                .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
-                .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-                .html(`
-                <div class="tooltip-title">${d.value}/${vis.totalSpecimens} Specimans ${vis.categories[d.index]}</div>
-                `);
-        })
-        .on('mouseleave', () => {
-            d3.select('#tooltip').style('display', 'none');
-        });
-
-        // add title
-        vis.chart.append("text")
-            .attr("x", (vis.config.containerWidth / 8 - vis.config.margin.left / 2 - 30))
-            .attr("y", - vis.config.containerHeight / 2 + vis.config.margin.top / 2)
-            .attr("text-anchor", "middle")
-            .text("Specimens With/Without GPS Coordinates")
+        // vis.rect.on('mouseover', (event,d) => {
+        //     d3.select('#tooltip')
+        //         .style('display', 'block')
+        //         .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+        //         .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+        //         .html(`
+        //         <div class="tooltip-title">${vis.categories[d]}</div>
+        //         <div><i>${vis.barchartData[d]} Specimens</i></div>
+        //         `);
+        // })
+        // .on('mouseleave', () => {
+        //     d3.select('#tooltip').style('display', 'none');
+        // });
     }
 }

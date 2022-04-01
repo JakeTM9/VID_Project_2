@@ -16,13 +16,13 @@ class PieChartDate {
     initVis(){
         let vis = this;
 
-        vis.categories = ["With Event Date", "Without Event Date"];
+        vis.categories = ["Total", "With Event Date", "Without Event Date"];
 
         vis.totalSpecimens = d3.count(vis.data, d => d.id);
         vis.haveDate = d3.count(vis.data, d => d.eventDate);
         vis.noDate = vis.totalSpecimens - vis.haveDate;
 
-        vis.pieData = [vis.haveDate, vis.noDate];
+        vis.barchartData = [vis.totalSpecimens, vis.haveDate, vis.noDate];
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.radius = vis.config.containerHeight / 2 - vis.config.margin.top;
@@ -55,7 +55,7 @@ class PieChartDate {
 
         // Compute the position of each group on the pie:
         vis.pie = d3.pie();
-        vis.data_ready = vis.pie(vis.pieData);
+        vis.data_ready = vis.pie(vis.barchartData);
 
         // shape helper to build arcs:
         vis.arcGenerator = d3.arc()
@@ -68,10 +68,11 @@ class PieChartDate {
     renderVis(){
         let vis = this;
 
-        vis.slices = vis.chart.selectAll('mySlices')
+        vis.chart.selectAll('mySlices')
             .data(vis.data_ready)
             .enter()
             .append('path')
+                // .attr('d', vis.arcGenerator)
                 .attr('d', d3.arc()
                     .innerRadius(0)
                     .outerRadius(vis.radius)
@@ -81,24 +82,18 @@ class PieChartDate {
                 .style("stroke-width", "2px")
                 .style("opacity", 0.7);
 
-        vis.slices.on('mouseover', (event,d) => {
-            d3.select('#tooltip')
-                .style('display', 'block')
-                .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
-                .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-                .html(`
-                <div class="tooltip-title">${d.value}/${vis.totalSpecimens} Specimans ${vis.categories[d.index]}</div>
-                `);
-        })
-        .on('mouseleave', () => {
-            d3.select('#tooltip').style('display', 'none');
-        });
-
-        // add title
-        vis.chart.append("text")
-            .attr("x", (vis.config.containerWidth / 6 - vis.config.margin.left / 2 - 60))
-            .attr("y", - vis.config.containerHeight / 2 + vis.config.margin.top / 2)
-            .attr("text-anchor", "middle")
-            .text("Specimens With/Without Event Dates")
+        // vis.rect.on('mouseover', (event,d) => {
+        //     d3.select('#tooltip')
+        //         .style('display', 'block')
+        //         .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+        //         .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+        //         .html(`
+        //         <div class="tooltip-title">${vis.categories[d]}</div>
+        //         <div><i>${vis.barchartData[d]} Specimens</i></div>
+        //         `);
+        // })
+        // .on('mouseleave', () => {
+        //     d3.select('#tooltip').style('display', 'none');
+        // });
     }
 }
