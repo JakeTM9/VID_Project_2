@@ -128,7 +128,7 @@ class BarChartCollectors {
     updateVis() {
         let vis = this;
         if(vis.startYear !== null && vis.endYear !== null){
-            console.log(vis.startYear);
+            // console.log(vis.startYear);
             vis.collectionsByPerson = {
             }
             //this is how we do it

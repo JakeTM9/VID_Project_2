@@ -20,9 +20,17 @@ class BarChartClasses {
 
         vis.phylumCount = new Array(8).fill(0);
         vis.data.forEach(d=> {
-            let index = vis.phylumList.indexOf(d.phylum);
-            if (index > -1){
-                vis.phylumCount[index] += 1;
+            if (vis.startYear == null ){
+                let index = vis.phylumList.indexOf(d.phylum);
+                if (index > -1){
+                    vis.phylumCount[index] += 1;
+                }
+            }
+            else if(d.year >= vis.startYear && d.year <= vis.endYear){
+                let index = vis.phylumList.indexOf(d.phylum);
+                if (index > -1){
+                    vis.phylumCount[index] += 1;
+                }
             }
         });
 
@@ -124,5 +132,13 @@ class BarChartClasses {
         // Update axis
         vis.xAxisGroup.call(vis.xAxis);
         vis.yAxisGroup.call(vis.yAxis);
+    }
+
+    updateByYear(yearFrom,yearTo){
+        let vis = this;
+        vis.svg.selectAll('*').remove();
+        vis.startYear = yearFrom;
+        vis.endYear = yearTo;
+        vis.initVis();
     }
 }
