@@ -20,12 +20,16 @@ class BarChartWhen {
 
         vis.monthCount = new Array(12).fill(0);
         vis.data.forEach(d=> {
-            var date = new Date(d.eventDate);
-            var month = date.getMonth();
-            // var splitDate = date.split("");
-            // var month = splitDate[0];
-            // console.log(month);
-            vis.monthCount[month] = vis.monthCount[month] + 1
+            if (vis.startYear == null ){
+                var date = new Date(d.eventDate);
+                var month = date.getMonth();
+                vis.monthCount[month] = vis.monthCount[month] + 1
+            }
+            else if(d.year >= vis.startYear && d.year <= vis.endYear){
+                var date = new Date(d.eventDate);
+                var month = date.getMonth();
+                vis.monthCount[month] = vis.monthCount[month] + 1
+            }
         });
         // console.log(vis.monthCount);
 
@@ -127,5 +131,13 @@ class BarChartWhen {
         // Update axis
         vis.xAxisGroup.call(vis.xAxis);
         vis.yAxisGroup.call(vis.yAxis);
+    }
+
+    updateByYear(yearFrom,yearTo){
+        let vis = this;
+        vis.svg.selectAll('*').remove();
+        vis.startYear = yearFrom;
+        vis.endYear = yearTo;
+        vis.initVis();
     }
 }

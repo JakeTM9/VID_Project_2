@@ -17,12 +17,40 @@ class PieChartGPS {
         let vis = this;
 
         vis.categories = ["With GPS", "Without GPS"];
+        // vis.haveGPS, vis.noGPS = 0;
 
-        vis.totalSpecimens = d3.count(vis.data, d => d.id);
-        vis.haveGPS = d3.count(vis.data, d => d.decimalLatitude);
-        vis.noGPS = vis.totalSpecimens - vis.haveGPS;
+        if (vis.startYear == null ){
+            vis.totalSpecimens = d3.count(vis.data, d => d.id);
+            vis.haveGPS = d3.count(vis.data, d => d.decimalLatitude);
+            vis.noGPS = vis.totalSpecimens - vis.haveGPS;
 
-        vis.pieData = [vis.haveGPS, vis.noGPS];
+            vis.pieData = [vis.haveGPS, vis.noGPS];
+        }
+        else {
+            vis.haveGPS = 0;
+            vis.noGPS = 0;
+            vis.totalSpecimens = 0;
+
+            vis.data.forEach(d=> {
+                // if (d.decimalLatitude !== "null" || d.decimalLongitude !== "null"){
+                if (d.year >= vis.startYear && d.year <= vis.endYear){
+                    // vis.haveGPS += 1;
+                    vis.totalSpecimens += 1;
+                    // console.log(d.year);
+                    if (d.decimalLatitude !== "null" || d.decimalLongitude !== "null"){
+                        vis.haveGPS += 1;
+                    }
+                }
+            });
+            vis.noGPS = vis.totalSpecimens - vis.haveGPS;
+            vis.pieData = [vis.haveGPS, vis.noGPS];
+        }
+
+        // vis.totalSpecimens = d3.count(vis.data, d => d.id);
+        // vis.haveGPS = d3.count(vis.data, d => d.decimalLatitude);
+        // vis.noGPS = vis.totalSpecimens - vis.haveGPS;
+
+        // vis.pieData = [vis.haveGPS, vis.noGPS];
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.radius = vis.config.containerHeight / 2 - vis.config.margin.top;
@@ -96,5 +124,13 @@ class PieChartGPS {
             .attr("y", - vis.config.containerHeight / 2 + vis.config.margin.top / 2)
             .attr("text-anchor", "middle")
             .text("Specimens With/Without GPS Coordinates")
+    }
+
+    updateByYear(yearFrom,yearTo){
+        let vis = this;
+        vis.svg.selectAll('*').remove();
+        vis.startYear = yearFrom;
+        vis.endYear = yearTo;
+        vis.initVis();
     }
 }
