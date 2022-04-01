@@ -36,8 +36,6 @@ class TimeLine {
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left}, ${transformheight})`);
 
-        
-
         // scales
         vis.xScale = d3.scaleBand()
             .range([0, vis.width]);
@@ -81,16 +79,12 @@ class TimeLine {
             .attr('class', 'axis y-axis')
             .attr('transform', `translate(0, 169)`);
 
-
-
         vis.updateVis();
     }
 
     //leave this empty for now
     updateVis() { 
         let vis = this;
-
-        
 
         // Process data
         vis.yearArray = [];
@@ -155,44 +149,6 @@ class TimeLine {
     renderVis() { 
         let vis = this;
 
-        //brushing
-        vis.isBrush = false;
-        vis.svg.brush = d3.brush().extent([[vis.config.margin.left,vis.config.margin.top],[vis.width + vis.config.margin.left,vis.height + vis.config.margin.top]])
-            .on("end", brushed);
-        
-
-        //brush stuuf
-        function brushed({selection}){
-            let value = [];
-            if (selection) {
-                //given pixel on svg point get year
-                function getYear(val) {
-                    var eachBand = vis.xScale.step();
-                    var index = Math.round((val / eachBand));
-                    var year = vis.xScale.domain()[index];
-                    return year;
-                }
-                const [[x0, y0], [x1, y1]] = selection;
-                //credit: https://stackoverflow.com/questions/38633082/d3-getting-invert-value-of-band-scales
-                let startYear = getYear(x0 - vis.config.margin.left);
-                let endYear = getYear(x1 - vis.config.margin.left);
-                //y is irrelevent kek;
-                filterGraphsByYear(startYear,endYear);
-            }
-            
-        }
-
-        vis.svg.on('click', (event,d) =>{
-            if(!vis.isBrush){
-                vis.svg.call(vis.svg.brush);
-                vis.isBrush = true;
-            }
-            else{
-                //I do not know how to remove this gosh darn brush
-            }
-            
-        })
-
         // Add rectangles
         vis.rect = vis.chart.selectAll('rect')
             .data(vis.fullYearArray)
@@ -203,8 +159,7 @@ class TimeLine {
                 .attr('width', d => vis.xScale.bandwidth())
                 .attr('height', d => vis.height - vis.yScale(vis.yearFrequency[d]))
                 .attr('y', d => vis.yScale(vis.yearFrequency[d] / 2))
-                .attr('x', d => vis.xScale(d))
-                .attr('pointer-events','all');
+                .attr('x', d => vis.xScale(d));
 
         vis.rect.on('mouseover', (event,d) => {
             d3.select('#tooltip')
@@ -219,15 +174,11 @@ class TimeLine {
         .on('mouseleave', () => {
             d3.select('#tooltip').style('display', 'none');
         });
-        
 
         // Update axis
         vis.xAxisGroup.call(vis.xAxis);
         vis.yAxisGroup.call(vis.yAxis);
         vis.lowerYAxisGroup.call(vis.lowerYAxis);
 
-        
-
-    }
-    
+    }  
 }
