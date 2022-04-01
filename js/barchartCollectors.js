@@ -42,7 +42,6 @@ class barchartCollectors {
         vis.People = []
         vis.Collections = []
         vis.collectionsByPerson.forEach(d => {
-            console.log(d);
             vis.People.push(d[0]);
             vis.Collections.push(+d[1]);
         })
