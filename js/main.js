@@ -155,4 +155,6 @@ function filterGraphsByYear(yearFrom, yearTo){
     barChartCollectors.updateByYear(yearFrom,yearTo);
     barChartClasses.updateByYear(yearFrom,yearTo);
     barChartWhen.updateByYear(yearFrom,yearTo);
+    pieChartGPS.updateByYear(yearFrom,yearTo);
+    pieChartDate.updateByYear(yearFrom,yearTo);
 }

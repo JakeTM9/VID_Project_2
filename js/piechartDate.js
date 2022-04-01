@@ -18,11 +18,32 @@ class PieChartDate {
 
         vis.categories = ["With Event Date", "Without Event Date"];
 
-        vis.totalSpecimens = d3.count(vis.data, d => d.id);
-        vis.haveDate = d3.count(vis.data, d => d.eventDate);
-        vis.noDate = vis.totalSpecimens - vis.haveDate;
+        if (vis.startYear == null ){
+            vis.totalSpecimens = d3.count(vis.data, d => d.id);
+            vis.haveDate = d3.count(vis.data, d => d.eventDate);
+            vis.noDate = vis.totalSpecimens - vis.haveDate;
 
-        vis.pieData = [vis.haveDate, vis.noDate];
+            vis.pieData = [vis.haveDate, vis.noDate];
+        }
+        else {
+            vis.haveDate = 0;
+            vis.noDate = 0;
+            vis.totalSpecimens = 0;
+
+            vis.data.forEach(d=> {
+                // if (d.decimalLatitude !== "null" || d.decimalLongitude !== "null"){
+                if (d.year >= vis.startYear && d.year <= vis.endYear){
+                    // vis.haveGPS += 1;
+                    vis.totalSpecimens += 1;
+                    // console.log(d.year);
+                    if (d.eventDate !== "null"){
+                        vis.haveDate += 1;
+                    }
+                }
+            });
+            vis.noDate = vis.totalSpecimens - vis.haveDate;
+            vis.pieData = [vis.haveDate, vis.noDate];
+        }
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.radius = vis.config.containerHeight / 2 - vis.config.margin.top;
@@ -100,5 +121,15 @@ class PieChartDate {
             .attr("y", - vis.config.containerHeight / 2 + vis.config.margin.top / 2)
             .attr("text-anchor", "middle")
             .text("Specimens With/Without Event Dates")
+    }
+
+    updateByYear(yearFrom,yearTo){
+        let vis = this;
+        // The pie charts share an SVG, since this one is drawn second
+        //the clearing of old data can be done by the first pie chart
+        // vis.svg.selectAll('*').remove();
+        vis.startYear = yearFrom;
+        vis.endYear = yearTo;
+        vis.initVis();
     }
 }
