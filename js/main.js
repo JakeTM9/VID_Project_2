@@ -90,8 +90,12 @@ d3.csv('data/processed_fixed.csv')
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
     timeLine = new TimeLine({ parentElement: '#timeline'}, data);
 
-    pieChartGPS = new PieChartGPS({parentElement: '#piechart'}, data);
-    pieChartDate = new PieChartDate({parentElement: '#piechart'}, data);
+    barChartWhen = new BarChartWhen({ parentElement: '#barchartWhen'}, data);
+    barChartCollectors = new BarChartCollectors({parentElement: '#barchartCollectors'}, data);
+    barChartClasses = new BarChartClasses({parentElement: '#barchartClasses'}, data);
+    
+    pieChartGPS = new PieChartGPS({parentElement: '#piechartGPS'}, data);
+    pieChartDate = new PieChartDate({parentElement: '#piechartDate'}, data);
 
   })
   .catch(error => console.error(error));
