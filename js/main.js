@@ -149,3 +149,8 @@ svgDay
   .append("g")
   .call(d3.axisBottom(x)
         .ticks(32));
+
+//update with filtered time
+function filterGraphsByYear(yearFrom, yearTo){
+    barChartCollectors.updateByYear(yearFrom,yearTo);
+}
