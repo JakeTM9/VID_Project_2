@@ -15,19 +15,16 @@ class BarChartClasses {
 
     initVis() {
         let vis = this;
-        vis.monthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        vis.monthNum = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+        vis.phylumList = ["Amoebozoa", "Ascomycota", "Basidiomycota", "Blastocladiomycota", "Chytridiomycota", "Myxomycota", "Oomycota", "Zygomycota"];
+        vis.phylumNum = [0, 1, 2, 3, 4, 5, 6, 7];
 
-        vis.monthCount = new Array(12).fill(0);
+        vis.phylumCount = new Array(8).fill(0);
         vis.data.forEach(d=> {
-            var date = new Date(d.eventDate);
-            var month = date.getMonth();
-            // var splitDate = date.split("");
-            // var month = splitDate[0];
-            // console.log(month);
-            vis.monthCount[month] = vis.monthCount[month] + 1
+            let index = vis.phylumList.indexOf(d.phylum);
+            if (index > -1){
+                vis.phylumCount[index] += 1;
+            }
         });
-        // console.log(vis.monthCount);
 
         //set up the width and height of the area where visualizations will go- factoring in margins               
         vis.width = vis.config.containerWidth - vis.config.margin.left - vis.config.margin.right;
@@ -51,15 +48,15 @@ class BarChartClasses {
         
         // scales
         vis.xScale = d3.scaleLinear()
-            .domain([0, d3.max(vis.monthCount)])
+            .domain([0, d3.max(vis.phylumCount)])
             .range([0, vis.width]);
         vis.yScale = d3.scaleBand()
-            // .domain(vis.monthNum)
+            // .domain(vis.phylumNum)
             .paddingInner(0.15)
-            .domain(vis.monthList)  
+            .domain(vis.phylumList)  
             .range([0, vis.height]);
 
-        // console.log('max count in a month', d3.max(vis.monthCount));
+        // console.log('max count in a month', d3.max(vis.phylumCount));
 
         // init axis
         vis.xAxis = d3.axisBottom(vis.xScale)
@@ -75,19 +72,19 @@ class BarChartClasses {
             .attr("x", vis.width/2)
             .attr("text-anchor", "right")
             .attr("stroke", "black")
-            .text("Samples per Month");
+            .text("Specimens per Phylum");
 
         vis.yAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
             // .attr('transform', `translate(0, ${vis.height})`);
             .attr('transform', `translate(0, 75)`);
         vis.yAxisGroup.append("text")
-            .attr("y", -35)
-            .attr("x", -vis.height / 2 + 25)
+            .attr("y", -90)
+            .attr("x", -vis.height / 2)
             .attr("text-anchor", "end")
             .attr("transform", "rotate(-90)")
             .attr("stroke", "black")
-            .text("Month");
+            .text("Phylum");
 
         vis.renderVis();
 
@@ -95,19 +92,19 @@ class BarChartClasses {
 
     renderVis() {
         let vis = this;
-        // console.log('Counts for each month:', vis.monthCount);
-        // console.log(vis.monthNum);
+        // console.log('Counts for each month:', vis.phylumCount);
+        // console.log(vis.phylumNum);
         // Add rectangles
         vis.rect = vis.chart.selectAll('rect')
-            .data(vis.monthNum)
+            .data(vis.phylumNum)
             .enter()
             .append('rect')
                 .attr('class', 'bar')
                 .attr('fill', "green")
-                .attr('width', d => vis.xScale(vis.monthCount[d]))
-                // .attr('height', d => vis.height - vis.yScale(vis.monthCount[d]))
+                .attr('width', d => vis.xScale(vis.phylumCount[d]))
+                // .attr('height', d => vis.height - vis.yScale(vis.phylumCount[d]))
                 .attr('height', vis.yScale.bandwidth())
-                .attr('y', d => vis.yScale(vis.monthList[d])+75)
+                .attr('y', d => vis.yScale(vis.phylumList[d])+75)
                 .attr('x', 0);
 
         vis.rect.on('mouseover', (event,d) => {
@@ -116,8 +113,8 @@ class BarChartClasses {
                 .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
-                <div class="tooltip-title">${vis.monthList[d]}</div>
-                <div><i>${vis.monthCount[d]} specimens collected</i></div>
+                <div class="tooltip-title">${vis.phylumList[d]}</div>
+                <div><i>${vis.phylumCount[d]} specimens collected</i></div>
                 `);
         })
         .on('mouseleave', () => {
