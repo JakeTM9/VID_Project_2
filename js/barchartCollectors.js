@@ -1,4 +1,4 @@
-class barchartCollectors {
+class BarChartCollectors {
      /**
      * Class constructor with basic chart configuration
      * @param {Object}
