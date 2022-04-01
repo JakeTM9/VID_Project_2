@@ -160,8 +160,7 @@ class BarChartCollectors {
             })
             //fix bug
             if(vis.People.length < 10){
-                while(vis.People.length < 10){
-                    vis.People.push("Joe Mama");
+                while(vis.Collections.length < 10){
                     vis.Collections.push(0);
                     vis.collectionsByPerson.push({
                         0: "Joe Mama",
