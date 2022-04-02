@@ -64,6 +64,7 @@ class TimeLine {
             .attr("x", vis.width)
             .attr("text-anchor", "right")
             .attr("stroke", "black")
+            .attr('font-size', '12px')
             .text("Year");
 
         vis.yAxisGroup = vis.chart.append("g")
@@ -71,11 +72,12 @@ class TimeLine {
             .attr('transform', `translate(0, ${vis.height / 2})`);
         vis.yAxisGroup.append("text")
             .attr("y", -35)
-            .attr("x", -vis.height / 2 + 25)
+            .attr("x", -vis.height / 2 + 50)
             .attr("text-anchor", "end")
             .attr("transform", "rotate(-90)")
             .attr("stroke", "black")
-            .text("# of Days");
+            .attr('font-size', '12px')
+            .text("# of Samples Collected");
 
         vis.lowerYAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
@@ -214,7 +216,7 @@ class TimeLine {
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
                 <div class="tooltip-title">${d}</div>
-                <div><i>${vis.yearFrequency[d]} days</i></div>
+                <div><i>${vis.yearFrequency[d]} samples collected</i></div>
                 `);
         })
         .on('mouseleave', () => {

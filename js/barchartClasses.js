@@ -53,7 +53,7 @@ class BarChartClasses {
             .attr("x", vis.width/2 - 80)
             .attr("text-anchor", "right")
             .attr('font-size', '14px')
-            .attr("stroke", "black")
+            .attr('font-weight', 'bold')
             .text("Samples per Phylum");
 
         vis.chart.append("text")
@@ -62,7 +62,7 @@ class BarChartClasses {
             .attr("text-anchor", "end")
             .attr('font-size', '14px')
             .attr("transform", "rotate(-90)")
-            .attr("stroke", "black")
+            .attr('font-weight', 'bold')
             .text("Phylum");
 
 

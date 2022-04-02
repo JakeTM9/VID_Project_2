@@ -60,9 +60,8 @@ class BarChartWhen {
             .attr("y", vis.height + vis.config.margin.bottom)
             .attr("x", (vis.width - vis.config.margin.left - vis.config.margin.right)/2)
             .attr("font-size","14px")
-           // .attr('font-weight', 'bold')
+           .attr('font-weight', 'bold')
             .attr("text-anchor", "right")
-            .attr("stroke", "black")
             .text("Samples per Month");
 
         vis.updateVis();
