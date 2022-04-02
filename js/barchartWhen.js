@@ -93,6 +93,7 @@ class BarChartWhen {
             .attr("stroke", "black")
             .text("Month");
 
+        vis.colorScale = ["#94C973", "#59981A"]
         vis.renderVis();
 
     }
@@ -107,7 +108,7 @@ class BarChartWhen {
             .enter()
             .append('rect')
                 .attr('class', 'bar')
-                .attr('fill', "green")
+                .attr('fill', "#94C973")
                 .attr('width', d => vis.xScale(vis.monthCount[d]))
                 // .attr('height', d => vis.height - vis.yScale(vis.monthCount[d]))
                 .attr('height', vis.yScale.bandwidth())

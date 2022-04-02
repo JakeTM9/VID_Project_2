@@ -72,7 +72,7 @@ class PieChartDate {
         // set the color scale
         vis.color = d3.scaleOrdinal()
             .domain(vis.data)
-            .range(d3.schemeSet2);
+            .range(["#3D550C", "#81B622"]);
 
         // Compute the position of each group on the pie:
         vis.pie = d3.pie();

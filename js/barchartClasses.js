@@ -108,7 +108,7 @@ class BarChartClasses {
             .enter()
             .append('rect')
                 .attr('class', 'bar')
-                .attr('fill', "green")
+                .attr('fill', "#59981A")
                 .attr('width', d => vis.xScale(vis.phylumCount[d]))
                 // .attr('height', d => vis.height - vis.yScale(vis.phylumCount[d]))
                 .attr('height', vis.yScale.bandwidth())

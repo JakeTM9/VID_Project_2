@@ -7,9 +7,9 @@ class BarChartCollectors {
       constructor(_config, _data) {
         this.config = {
           parentElement: _config.parentElement,
-          containerWidth: _config.containerWidth || 600,
-          containerHeight: _config.containerHeight || 250,
-          margin: _config.margin || {top: 25, right: 30, bottom: 60, left: 150}
+          containerWidth: _config.containerWidth || 800,
+          containerHeight: _config.containerHeight || 400,
+          margin: _config.margin || {top: 50, right: 10, bottom: 30, left: 110}
         }
         this.data = _data;
         this.initVis();
@@ -213,7 +213,8 @@ class BarChartCollectors {
             .data(vis.collectionsByPerson)
             .enter()
             .append('rect')
-                .attr('class', 'barCollector')
+                .attr('class', 'bar')
+                .attr('fill', "#94C973")
                 .attr('width',d => vis.xScale(d[1]))
                 .attr('height', vis.yScale.bandwidth())
                 .attr('y', d => vis.yScale(d[0]))
