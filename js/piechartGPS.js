@@ -105,7 +105,7 @@ class PieChartGPS {
                 .style("opacity", 0.7);
 
         vis.slices.on('mouseover', (event,d) => {
-            console.log('tooltip d: ', d)
+            // console.log('tooltip d: ', d)
             d3.select('#tooltip')
                 .style('display', 'block')
                 .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
@@ -126,7 +126,7 @@ class PieChartGPS {
             .text("Specimens With/Without GPS Coordinates")
     }
 
-    updateByYear(yearFrom,yearTo){
+    updateByYear(yearFrom, yearTo){
         let vis = this;
         vis.svg.selectAll('*').remove();
         vis.startYear = yearFrom;

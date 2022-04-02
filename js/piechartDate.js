@@ -123,7 +123,7 @@ class PieChartDate {
             .text("Specimens With/Without Event Dates")
     }
 
-    updateByYear(yearFrom,yearTo){
+    updateByYear(yearFrom, yearTo){
         let vis = this;
         // The pie charts share an SVG, since this one is drawn second
         //the clearing of old data can be done by the first pie chart

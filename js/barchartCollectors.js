@@ -245,7 +245,7 @@ class BarChartCollectors {
         vis.yAxisG.call(vis.yAxis);
     }
 
-    updateByYear(yearFrom,yearTo){
+    updateByYear(yearFrom, yearTo){
         let vis = this;
         vis.startYear = yearFrom;
         vis.endYear = yearTo;

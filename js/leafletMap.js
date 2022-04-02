@@ -238,13 +238,56 @@ class LeafletMap {
       //   desiredMetersForPoint = 100; //or the uncertainty measure... =) 
       //   radiusSize = desiredMetersForPoint / metresPerPixel;
       // }
+
+      ////////////////Attempt 1 at removing out of date span dots
+      let lats = [];
+      let longs = [];
+      
+      if (vis.startYear == null ){
+        // d.vis.lats = d.latitude;
+        // d.vis.longs = d.longitude;
+
+      //redraw based on new zoom- need to recalculate on-screen position
+      // vis.Dots
+      //   .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
+      //   .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
+      //   .attr("r", vis.radiusSize)
+      //   .attr("fill", d => vis.handleDotColor(d,vis.colorType));
+        vis.data.forEach(d=> {
+          lats.push(d.latitude);
+          longs.push(d.longitude);
+        });
+      }
+      else {
+        lats = [];
+        longs = [];
+        console.log("Found the brush.");
+
+        vis.data.forEach(d=> {
+          if (d.year >= vis.startYear && d.year <= vis.endYear){
+            lats.push(d.latitude);
+            longs.push(d.longitude);
+          }
+        });
+        console.log("These are the latitudes:", vis.lats);  
+      }
      
-     //redraw based on new zoom- need to recalculate on-screen position
+      //redraw based on new zoom- need to recalculate on-screen position
       vis.Dots
-        .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
-        .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
+        .attr("cx", d => vis.theMap.latLngToLayerPoint([d.lats, d.longs]).x)
+        .attr("cy", d => vis.theMap.latLngToLayerPoint([d.lats, d.longs]).y)
         .attr("r", vis.radiusSize)
         .attr("fill", d => vis.handleDotColor(d,vis.colorType));
+      //////////////////end attempt 1
+
+
+      // //Original
+      // //redraw based on new zoom- need to recalculate on-screen position
+      // vis.Dots
+      //   .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
+      //   .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
+      //   .attr("r", vis.radiusSize)
+      //   .attr("fill", d => vis.handleDotColor(d,vis.colorType));
   
     }
   
@@ -263,5 +306,13 @@ class LeafletMap {
       let vis = this;
       vis.colorType = colorType;
       this.updateVis();
+    }
+
+    updateByYear(yearFrom, yearTo){
+      let vis = this;
+        vis.startYear = yearFrom;
+        vis.endYear = yearTo;
+        vis.svg.selectAll('circle').remove();
+        vis.updateVis();
     }
   }
