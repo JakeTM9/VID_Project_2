@@ -4,7 +4,7 @@ class BarChartClasses {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 800,
             containerHeight: _config.containerHeight || 400,
-            margin: _config.margin || {top: 50, right: 10, bottom: 30, left: 110},
+            margin: _config.margin || {top: 50, right: 10, bottom: 75, left: 110},
             tooltipPadding: _config.tooltipPadding || 15
         }
   
@@ -48,6 +48,24 @@ class BarChartClasses {
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left}, ${transformheight})`);
 
+        vis.chart.append("text")
+            .attr("y", vis.height + 130)
+            .attr("x", vis.width/2 - 80)
+            .attr("text-anchor", "right")
+            .attr('font-size', '14px')
+            .attr('font-weight', 'bold')
+            .text("Samples per Phylum");
+
+        vis.chart.append("text")
+            .attr("y", -99)
+            .attr("x", -vis.height / 2 - 50)
+            .attr("text-anchor", "end")
+            .attr('font-size', '14px')
+            .attr("transform", "rotate(-90)")
+            .attr('font-weight', 'bold')
+            .text("Phylum");
+
+
         vis.updateVis();
     }
 
@@ -69,30 +87,20 @@ class BarChartClasses {
         // init axis
         vis.xAxis = d3.axisBottom(vis.xScale)
             // .tickFormat(d3.format("d")); // Remove thousand comma
-        vis.yAxis = d3.axisLeft(vis.yScale);
+            .tickSizeOuter(0);
+        vis.yAxis = d3.axisLeft(vis.yScale)
+            .tickSizeOuter(0);
 
         // init axis groups
         vis.xAxisGroup = vis.chart.append("g")
             .attr('class', 'axis x-axis')
             .attr('transform', `translate(0, ${vis.height+75})`);
-        vis.xAxisGroup.append("text")
-            .attr("y", 50)
-            .attr("x", vis.width/2)
-            .attr("text-anchor", "right")
-            .attr("stroke", "black")
-            .text("Specimens per Phylum");
+        
 
         vis.yAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
             // .attr('transform', `translate(0, ${vis.height})`);
             .attr('transform', `translate(0, 75)`);
-        vis.yAxisGroup.append("text")
-            .attr("y", -90)
-            .attr("x", -vis.height / 2)
-            .attr("text-anchor", "end")
-            .attr("transform", "rotate(-90)")
-            .attr("stroke", "black")
-            .text("Phylum");
 
         vis.renderVis();
 
@@ -108,12 +116,12 @@ class BarChartClasses {
             .enter()
             .append('rect')
                 .attr('class', 'bar')
-                .attr('fill', "green")
+                .attr('fill', "#59981A")
                 .attr('width', d => vis.xScale(vis.phylumCount[d]))
                 // .attr('height', d => vis.height - vis.yScale(vis.phylumCount[d]))
                 .attr('height', vis.yScale.bandwidth())
                 .attr('y', d => vis.yScale(vis.phylumList[d])+75)
-                .attr('x', 0);
+                .attr('x', 1);
 
         vis.rect.on('mouseover', (event,d) => {
             d3.select('#tooltip')
@@ -122,7 +130,7 @@ class BarChartClasses {
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
                 <div class="tooltip-title">${vis.phylumList[d]}</div>
-                <div><i>${vis.phylumCount[d]} specimens collected</i></div>
+                <div><i>${vis.phylumCount[d]} samples collected</i></div>
                 `);
         })
         .on('mouseleave', () => {

@@ -7,9 +7,9 @@ class BarChartCollectors {
       constructor(_config, _data) {
         this.config = {
           parentElement: _config.parentElement,
-          containerWidth: _config.containerWidth || 600,
-          containerHeight: _config.containerHeight || 250,
-          margin: _config.margin || {top: 25, right: 30, bottom: 60, left: 150},
+          containerWidth: _config.containerWidth || 800,
+          containerHeight: _config.containerHeight || 400,
+          margin: _config.margin || {top: 50, right: 10, bottom: 75, left: 115},
           tooltipPadding: _config.tooltipPadding || 15
         }
         this.data = _data;
@@ -97,24 +97,26 @@ class BarChartCollectors {
         vis.marks = vis.chart.append('g');
         vis.trackingArea = vis.chart.append('rect')
             .attr('width', vis.width)
-            .attr('height', vis.height)
+            .attr('height', vis.height +50 ) 
             .attr('fill', 'none')
             .attr('pointer-events', 'all');
         
         //axes titles
         vis.chart.append("text")
         .attr("text-anchor", "end")
-        .attr("x", vis.width/2 + vis.config.margin.left / 2)
-        .attr("y", vis.height +50)
-        .attr("stroke", "black")
+        .attr("x", vis.width/2 + 55)
+        .attr("y", vis.height + 60)
+        .attr("font-size","14px")
+        .attr('font-weight', 'bold')
         .text("Number of Collections");
 
         vis.chart.append("text")
         .attr("text-anchor", "end")
         .attr("transform", "rotate(-90)")
-        .attr("y", -vis.config.margin.left +20)
-        .attr("x", -vis.config.margin.top -20 )
-        .attr("stroke", "black")
+        .attr("y", -vis.config.margin.left + 15)
+        .attr("x", -vis.config.margin.top - 20 )
+        .attr("font-size","14px")
+        .attr('font-weight', 'bold')
         .text("Collector");
 
         vis.startYear = null;
@@ -214,11 +216,12 @@ class BarChartCollectors {
             .data(vis.collectionsByPerson)
             .enter()
             .append('rect')
-                .attr('class', 'barCollector')
+                .attr('class', 'bar')
+                .attr('fill', "#94C973")
                 .attr('width',d => vis.xScale(d[1]))
                 .attr('height', vis.yScale.bandwidth())
                 .attr('y', d => vis.yScale(d[0]))
-                .attr('x', 0);
+                .attr('x', 1);
 
         vis.rect.on('mouseover', (event,d) => {
             d3.select('#tooltip')

@@ -74,7 +74,7 @@ class PieChartGPS {
         // set the color scale
         vis.color = d3.scaleOrdinal()
             .domain(vis.data)
-            .range(d3.schemeSet2);
+            .range(["#3D550C", "#81B622"]);
 
         // Compute the position of each group on the pie:
         vis.pie = d3.pie();
@@ -111,7 +111,7 @@ class PieChartGPS {
                 .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
-                <div class="tooltip-title">${d.value}/${vis.totalSpecimens} Specimans ${vis.categories[d.index]}</div>
+                <div class="tooltip-title">${d.value}/${vis.totalSpecimens} Samples ${vis.categories[d.index]}</div>
                 `);
         })
         .on('mouseleave', () => {
@@ -123,7 +123,9 @@ class PieChartGPS {
             .attr("x", (vis.config.containerWidth / 8 - vis.config.margin.left / 2 - 30))
             .attr("y", - vis.config.containerHeight / 2 + vis.config.margin.top / 2)
             .attr("text-anchor", "middle")
-            .text("Specimens With/Without GPS Coordinates")
+            .text("Samples With/Without GPS Coordinates")
+            .style("font-size", "1.3em")
+            .style("font-weight", "bolder")
     }
 
     updateByYear(yearFrom, yearTo){

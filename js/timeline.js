@@ -8,7 +8,7 @@ class TimeLine {
             tooltipPadding: _config.tooltipPadding || 10
         }
 
-        this.config.containerWidth = d3.select('#timelinediv').node().getBoundingClientRect().width;
+        this.config.containerWidth = d3.select('#timelinediv').node().getBoundingClientRect().width - 200;
   
         this.data = _data;
     
@@ -64,6 +64,7 @@ class TimeLine {
             .attr("x", vis.width)
             .attr("text-anchor", "right")
             .attr("stroke", "black")
+            .attr('font-size', '12px')
             .text("Year");
 
         vis.yAxisGroup = vis.chart.append("g")
@@ -71,11 +72,12 @@ class TimeLine {
             .attr('transform', `translate(0, ${vis.height / 2})`);
         vis.yAxisGroup.append("text")
             .attr("y", -35)
-            .attr("x", -vis.height / 2 + 25)
+            .attr("x", -vis.height / 2 + 50)
             .attr("text-anchor", "end")
             .attr("transform", "rotate(-90)")
             .attr("stroke", "black")
-            .text("# of Days");
+            .attr('font-size', '12px')
+            .text("# of Samples Collected");
 
         vis.lowerYAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
@@ -133,7 +135,7 @@ class TimeLine {
         //console.log('year freq array: ', vis.yearFrequencyArray)
 
         // set scale domains
-        vis.xScale.domain(vis.fullYearArray).paddingInner(0.1);
+        vis.xScale.domain(vis.fullYearArray).paddingInner(0.25);
         vis.xAxisScale.domain(d3.extent(vis.yearArray));
         vis.yScale.domain([d3.max(vis.yearFrequencyArray) / 2 * 1.05, -(d3.max(vis.yearFrequencyArray) * .02)]);
         vis.yAxisScale.domain([-(d3.max(vis.yearFrequencyArray) * .02),d3.max(vis.yearFrequencyArray) / 2 * 1.05]);
@@ -146,7 +148,8 @@ class TimeLine {
         vis.yAxis.ticks(6);
         vis.lowerYAxis.ticks(6);
 
-        vis.colorScale = ["#0000FF", "#FF0000", "#6600FF", "#FF6600", "#00FF00", "#FFF00"]
+        //vis.colorScale = ["#0000FF", "#FF0000", "#6600FF", "#FF6600", "#00FF00", "#FFF00"]
+        vis.colorScale = ["#94C973", "#59981A"]
 
         vis.renderVis()
     }
@@ -199,7 +202,7 @@ class TimeLine {
             .enter()
             .append('rect')
                 .attr('class', 'bar')
-                .attr('fill', function(d,i) { if (vis.yearFrequency[d] == 0) { return "#808080"; } else{return vis.colorScale[i%5]}})
+                .attr('fill', function(d,i) { if (vis.yearFrequency[d] == 0) { return "#808080"; } else{return vis.colorScale[i%2]}})
                 .attr('width', d => vis.xScale.bandwidth())
                 .attr('height', d => vis.height - vis.yScale(vis.yearFrequency[d]))
                 .attr('y', d => vis.yScale(vis.yearFrequency[d] / 2))
@@ -213,7 +216,7 @@ class TimeLine {
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
                 <div class="tooltip-title">${d}</div>
-                <div><i>${vis.yearFrequency[d]} days</i></div>
+                <div><i>${vis.yearFrequency[d]} samples collected</i></div>
                 `);
         })
         .on('mouseleave', () => {
