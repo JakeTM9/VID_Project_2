@@ -108,7 +108,7 @@ class PieChartDate {
                 .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
-                <div class="tooltip-title">${d.value}/${vis.totalSpecimens} Specimans ${vis.categories[d.index]}</div>
+                <div class="tooltip-title">${d.value}/${vis.totalSpecimens} Samples ${vis.categories[d.index]}</div>
                 `);
         })
         .on('mouseleave', () => {
@@ -120,7 +120,9 @@ class PieChartDate {
             .attr("x", (vis.config.containerWidth / 6 - vis.config.margin.left / 2 - 60))
             .attr("y", - vis.config.containerHeight / 2 + vis.config.margin.top / 2)
             .attr("text-anchor", "middle")
-            .text("Specimens With/Without Event Dates")
+            .text("Samples With/Without Event Dates")
+            .style("font-size", "1.3em")
+            .style("font-weight", "bolder")
     }
 
     updateByYear(yearFrom,yearTo){

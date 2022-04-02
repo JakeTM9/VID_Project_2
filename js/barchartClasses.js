@@ -54,7 +54,7 @@ class BarChartClasses {
             .attr("text-anchor", "right")
             .attr('font-size', '14px')
             .attr("stroke", "black")
-            .text("Specimens per Phylum");
+            .text("Samples per Phylum");
 
         vis.chart.append("text")
             .attr("y", -99)
@@ -87,7 +87,9 @@ class BarChartClasses {
         // init axis
         vis.xAxis = d3.axisBottom(vis.xScale)
             // .tickFormat(d3.format("d")); // Remove thousand comma
-        vis.yAxis = d3.axisLeft(vis.yScale);
+            .tickSizeOuter(0);
+        vis.yAxis = d3.axisLeft(vis.yScale)
+            .tickSizeOuter(0);
 
         // init axis groups
         vis.xAxisGroup = vis.chart.append("g")
@@ -119,7 +121,7 @@ class BarChartClasses {
                 // .attr('height', d => vis.height - vis.yScale(vis.phylumCount[d]))
                 .attr('height', vis.yScale.bandwidth())
                 .attr('y', d => vis.yScale(vis.phylumList[d])+75)
-                .attr('x', 0);
+                .attr('x', 1);
 
         vis.rect.on('mouseover', (event,d) => {
             d3.select('#tooltip')
@@ -128,7 +130,7 @@ class BarChartClasses {
                 .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
                 .html(`
                 <div class="tooltip-title">${vis.phylumList[d]}</div>
-                <div><i>${vis.phylumCount[d]} specimens collected</i></div>
+                <div><i>${vis.phylumCount[d]} samples collected</i></div>
                 `);
         })
         .on('mouseleave', () => {

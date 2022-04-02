@@ -9,7 +9,7 @@ class BarChartCollectors {
           parentElement: _config.parentElement,
           containerWidth: _config.containerWidth || 800,
           containerHeight: _config.containerHeight || 400,
-          margin: _config.margin || {top: 50, right: 10, bottom: 150, left: 110}
+          margin: _config.margin || {top: 50, right: 10, bottom: 75, left: 115}
         }
         this.data = _data;
         this.initVis();
@@ -220,7 +220,7 @@ class BarChartCollectors {
                 .attr('width',d => vis.xScale(d[1]))
                 .attr('height', vis.yScale.bandwidth())
                 .attr('y', d => vis.yScale(d[0]))
-                .attr('x', 0);
+                .attr('x', 1);
 
         // Update the axes
         vis.xAxisG.call(vis.xAxis);
