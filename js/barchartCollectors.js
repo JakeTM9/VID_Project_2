@@ -236,13 +236,6 @@ class BarChartCollectors {
             d3.select('#tooltip').style('display', 'none');
         });
 
-        // add title
-        vis.chart.append("text")
-            .attr("x", (vis.config.containerWidth / 2 - vis.config.margin.left / 2 - 30))
-            .attr("y", - vis.config.margin.top / 2)
-            .attr("text-anchor", "middle")
-            .text("Collections per Collector")
-
         // Update the axes
         vis.xAxisG.call(vis.xAxis);
         vis.yAxisG.call(vis.yAxis);

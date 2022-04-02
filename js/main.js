@@ -84,7 +84,7 @@ d3.csv('data/processed_fixed.csv')
 
     });
 
-    console.log(data);//ok, got my data!
+    // console.log(data);//ok, got my data!
 
     // Initialize chart and then show it
     leafletMap = new LeafletMap({ parentElement: '#my-map'}, data);
@@ -150,6 +150,7 @@ svgDay
   .call(d3.axisBottom(x)
         .ticks(32));
 
+const baseTitle = "Samples Collected Globally";
 //update with filtered time
 function filterGraphsByYear(yearFrom, yearTo){
     barChartCollectors.updateByYear(yearFrom,yearTo);
@@ -158,4 +159,5 @@ function filterGraphsByYear(yearFrom, yearTo){
     pieChartGPS.updateByYear(yearFrom,yearTo);
     pieChartDate.updateByYear(yearFrom,yearTo);
     leafletMap.updateByYear(yearFrom, yearTo);
+    document.getElementById("page-title").innerHTML = baseTitle + " From " + yearFrom + "-" + yearTo;
 }
