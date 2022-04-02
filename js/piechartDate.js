@@ -18,7 +18,7 @@ class PieChartDate {
 
         vis.categories = ["With Event Date", "Without Event Date"];
 
-        if (vis.startYear == null ){
+        if (vis.startYear == null){
             vis.totalSpecimens = d3.count(vis.data, d => d.id);
             vis.haveDate = d3.count(vis.data, d => d.eventDate);
             vis.noDate = vis.totalSpecimens - vis.haveDate;
@@ -123,7 +123,7 @@ class PieChartDate {
             .text("Specimens With/Without Event Dates")
     }
 
-    updateByYear(yearFrom,yearTo){
+    updateByYear(yearFrom, yearTo){
         let vis = this;
         // The pie charts share an SVG, since this one is drawn second
         //the clearing of old data can be done by the first pie chart
