@@ -4,7 +4,7 @@ class BarChartClasses {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 800,
             containerHeight: _config.containerHeight || 400,
-            margin: _config.margin || {top: 50, right: 10, bottom: 30, left: 110},
+            margin: _config.margin || {top: 50, right: 10, bottom: 75, left: 110},
             tooltipPadding: _config.tooltipPadding || 15
         }
   
@@ -48,6 +48,24 @@ class BarChartClasses {
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left}, ${transformheight})`);
 
+        vis.chart.append("text")
+            .attr("y", vis.height + 130)
+            .attr("x", vis.width/2 - 80)
+            .attr("text-anchor", "right")
+            .attr('font-size', '14px')
+            .attr("stroke", "black")
+            .text("Specimens per Phylum");
+
+        vis.chart.append("text")
+            .attr("y", -99)
+            .attr("x", -vis.height / 2 - 50)
+            .attr("text-anchor", "end")
+            .attr('font-size', '14px')
+            .attr("transform", "rotate(-90)")
+            .attr("stroke", "black")
+            .text("Phylum");
+
+
         vis.updateVis();
     }
 
@@ -75,24 +93,12 @@ class BarChartClasses {
         vis.xAxisGroup = vis.chart.append("g")
             .attr('class', 'axis x-axis')
             .attr('transform', `translate(0, ${vis.height+75})`);
-        vis.xAxisGroup.append("text")
-            .attr("y", 50)
-            .attr("x", vis.width/2)
-            .attr("text-anchor", "right")
-            .attr("stroke", "black")
-            .text("Specimens per Phylum");
+        
 
         vis.yAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
             // .attr('transform', `translate(0, ${vis.height})`);
             .attr('transform', `translate(0, 75)`);
-        vis.yAxisGroup.append("text")
-            .attr("y", -90)
-            .attr("x", -vis.height / 2)
-            .attr("text-anchor", "end")
-            .attr("transform", "rotate(-90)")
-            .attr("stroke", "black")
-            .text("Phylum");
 
         vis.renderVis();
 

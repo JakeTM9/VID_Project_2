@@ -9,7 +9,7 @@ class BarChartCollectors {
           parentElement: _config.parentElement,
           containerWidth: _config.containerWidth || 800,
           containerHeight: _config.containerHeight || 400,
-          margin: _config.margin || {top: 50, right: 10, bottom: 30, left: 110}
+          margin: _config.margin || {top: 50, right: 10, bottom: 150, left: 110}
         }
         this.data = _data;
         this.initVis();
@@ -96,24 +96,26 @@ class BarChartCollectors {
         vis.marks = vis.chart.append('g');
         vis.trackingArea = vis.chart.append('rect')
             .attr('width', vis.width)
-            .attr('height', vis.height)
+            .attr('height', vis.height +50 ) 
             .attr('fill', 'none')
             .attr('pointer-events', 'all');
         
         //axes titles
         vis.chart.append("text")
         .attr("text-anchor", "end")
-        .attr("x", vis.width/2)
-        .attr("y", vis.height +50)
-        .attr("font-size","20px")
+        .attr("x", vis.width/2 + 55)
+        .attr("y", vis.height + 60)
+        .attr("font-size","14px")
+        .attr('font-weight', 'bold')
         .text("Number of Collections");
 
         vis.chart.append("text")
         .attr("text-anchor", "end")
         .attr("transform", "rotate(-90)")
-        .attr("y", -vis.config.margin.left +20)
-        .attr("x", -vis.config.margin.top -20 )
-        .attr("font-size","20px")
+        .attr("y", -vis.config.margin.left + 15)
+        .attr("x", -vis.config.margin.top - 20 )
+        .attr("font-size","14px")
+        .attr('font-weight', 'bold')
         .text("Collector");
 
         vis.startYear = null;

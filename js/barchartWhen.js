@@ -4,7 +4,7 @@ class BarChartWhen {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 800,
             containerHeight: _config.containerHeight || 400,
-            margin: _config.margin || {top: 10, right: 50, bottom: 30, left: 110},
+            margin: _config.margin || {top: 10, right: 50, bottom: 150, left: 110},
             tooltipPadding: _config.tooltipPadding || 15
         }
   
@@ -47,6 +47,24 @@ class BarChartWhen {
         vis.chart = vis.svg.append('g')
             .attr('transform', `translate(${vis.config.margin.left}, ${transformheight})`);
 
+        vis.chart.append("text")
+            .attr("text-anchor", "end")
+            .attr("transform", "rotate(-90)")
+            .attr("y",  vis.config.margin.top - 75)
+            .attr("x", -vis.height / 2 - 50)
+            .attr("font-size","14px")
+          // .attr('font-weight', 'bold')
+            .text("Month");
+
+        vis.chart.append("text")
+            .attr("y", vis.height + vis.config.margin.bottom - 10)
+            .attr("x", (vis.width - vis.config.margin.left - vis.config.margin.right)/2)
+            .attr("font-size","14px")
+           // .attr('font-weight', 'bold')
+            .attr("text-anchor", "right")
+            .attr("stroke", "black")
+            .text("Samples per Month");
+
         vis.updateVis();
     }
 
@@ -74,24 +92,28 @@ class BarChartWhen {
         vis.xAxisGroup = vis.chart.append("g")
             .attr('class', 'axis x-axis')
             .attr('transform', `translate(0, ${vis.height+75})`);
-        vis.xAxisGroup.append("text")
-            .attr("y", 50)
-            .attr("x", vis.width/2)
-            .attr("text-anchor", "right")
-            .attr("stroke", "black")
-            .text("Samples per Month");
+
+        // vis.xAxisGroup.append("text")
+        //     .attr("y", 50)
+        //     .attr("x", vis.width/2)
+        //     .attr("text-anchor", "right")
+        //     .attr("stroke", "black")
+        //     .text("Samples per Month");
 
         vis.yAxisGroup = vis.chart.append("g")
             .attr('class', 'axis y-axis')
             // .attr('transform', `translate(0, ${vis.height})`);
             .attr('transform', `translate(0, 75)`);
-        vis.yAxisGroup.append("text")
-            .attr("y", -35)
-            .attr("x", -vis.height / 2 + 25)
-            .attr("text-anchor", "end")
-            .attr("transform", "rotate(-90)")
-            .attr("stroke", "black")
-            .text("Month");
+
+        // vis.yAxisGroup.append("text")
+        //    // .attr('class', 'label-text')
+        //     .attr("y", -70)
+        //     .attr("x", -vis.height / 2 + 25)
+        //     .style("font", "20px times bold")
+        //     .attr("text-anchor", "end")
+        //     .attr("transform", "rotate(-90)")
+        //     .attr("stroke", "black")
+        //     .text("Month");
 
         vis.colorScale = ["#94C973", "#59981A"]
         vis.renderVis();
