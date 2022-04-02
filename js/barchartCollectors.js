@@ -222,12 +222,32 @@ class BarChartCollectors {
                 .attr('y', d => vis.yScale(d[0]))
                 .attr('x', 1);
 
+        vis.rect.on('mouseover', (event,d) => {
+            d3.select('#tooltip')
+                .style('display', 'block')
+                .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')   
+                .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                .html(`
+                <div class="tooltip-title">${d[0]} has ${d[1]} Collections</div>
+                `);
+        })
+        .on('mouseleave', () => {
+            d3.select('#tooltip').style('display', 'none');
+        });
+
+        // add title
+        vis.chart.append("text")
+            .attr("x", (vis.config.containerWidth / 2 - vis.config.margin.left / 2 - 30))
+            .attr("y", - vis.config.margin.top / 2)
+            .attr("text-anchor", "middle")
+            .text("Collections per Collector")
+
         // Update the axes
         vis.xAxisG.call(vis.xAxis);
         vis.yAxisG.call(vis.yAxis);
     }
 
-    updateByYear(yearFrom,yearTo){
+    updateByYear(yearFrom, yearTo){
         let vis = this;
         vis.startYear = yearFrom;
         vis.endYear = yearTo;

@@ -157,7 +157,7 @@ class BarChartWhen {
         vis.yAxisGroup.call(vis.yAxis);
     }
 
-    updateByYear(yearFrom,yearTo){
+    updateByYear(yearFrom, yearTo){
         let vis = this;
         vis.svg.selectAll('*').remove();
         vis.startYear = yearFrom;
