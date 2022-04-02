@@ -158,71 +158,13 @@ class LeafletMap {
           }
         }        
       }
-  
-      //these are the city locations, displayed as a set of dots 
-      vis.Dots = vis.svg.selectAll('circle')
-                      .data(vis.data) 
-                      .join('circle')
-                          .attr("fill", d => vis.handleDotColor(d, vis.colorType)) 
-                          .attr("stroke", "black")
-                          //Leaflet has to take control of projecting points. Here we are feeding the latitude and longitude coordinates to
-                          //leaflet so that it can project them on the coordinates of the view. Notice, we have to reverse lat and lon.
-                          //Finally, the returned conversion produces an x and y point. We have to select the the desired one using .x or .y
-                          .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
-                          .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y) 
-                          .attr("r", 3)
-                          .on('mouseover', function(event,d) { //function to add mouseover event
-                              d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
-                                .duration('150') //how long we are transitioning between the two states (works like keyframes)
-                                /*.attr("fill", "white") *///change the fill
-                                .attr('r', vis.theMap.getZoom() + 3); //change radius
-  
-                              //create a tool tip
-                              d3.select('#tooltip-map')
-                                  .style('opacity', 1)
-                                  .style('display','block')
-                                  .style('z-index', 1000000)
-                                  .style('left', (event.pageX + 1) + 'px')   
-                                  .style('top', (event.pageY + 1) + 'px')
-                                    // Format number with million and thousand separator THESE R THE VARS: ${d.city} ${d3.format(',')(d.population)}
-                                  .html(`<div class="tooltip-map-label">Collected: ${d.year} <br>
-                                                                    Recorded By: ${d.recordedBy} <br>
-                                                                    Kingdom: ${d.kingdom} <br>
-                                                                    Phylum: ${d.phylum} <br>
-                                                                    Habitat: ${d.habitat}</div>
-                                                                    <a href="${d.references}" target="_blank">Database Entry</a>`);
 
-                              vis.tooltipLeft = event.pageX + 1;
-                              vis.tooltipTop = event.pageY + 1;
-  
-                            })
-                          .on('mousemove', (event) => {
-                              //position the tooltip
-                              
-                            
-                               
-                              
-                           })              
-                          .on('mouseleave', function(event) { //function to add mouseover event
-                              d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
-                                .duration('150') //how long we are transitioning between the two states (works like keyframes)
-                                .attr("fill", d => vis.handleDotColor(d,vis.colorType)) //change the fill
-                                .attr('r', vis.theMap.getZoom() + 1) //change radius
-                                vis.checkTooltipClose(event);
-  
-                            })
-                          .on('click', (event, d) => { //experimental feature I was trying- click on point and then fly to it
-                             // vis.newZoom = vis.theMap.getZoom()+2;
-                             // if( vis.newZoom > 18)
-                             //  vis.newZoom = 18; 
-                             // vis.theMap.flyTo([d.latitude, d.longitude], vis.newZoom);
-                            });
-      
       //handler here for updating the map, as you zoom in and out           
       vis.theMap.on("zoomend", function(){
         vis.updateVis();
       });
-  
+      
+      vis.renderVis();
     }
   
     updateVis() {
@@ -239,55 +181,55 @@ class LeafletMap {
       //   radiusSize = desiredMetersForPoint / metresPerPixel;
       // }
 
-      ////////////////Attempt 1 at removing out of date span dots
-      let lats = [];
-      let longs = [];
+      // ////////////////Attempt 1 at removing out of date span dots
+      // let lats = [];
+      // let longs = [];
       
-      if (vis.startYear == null ){
-        // d.vis.lats = d.latitude;
-        // d.vis.longs = d.longitude;
+      // if (vis.startYear == null ){
+      //   // d.vis.lats = d.latitude;
+      //   // d.vis.longs = d.longitude;
 
-      //redraw based on new zoom- need to recalculate on-screen position
-      // vis.Dots
-      //   .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
-      //   .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
-      //   .attr("r", vis.radiusSize)
-      //   .attr("fill", d => vis.handleDotColor(d,vis.colorType));
-        vis.data.forEach(d=> {
-          lats.push(d.latitude);
-          longs.push(d.longitude);
-        });
-      }
-      else {
-        lats = [];
-        longs = [];
-        console.log("Found the brush.");
+      // //redraw based on new zoom- need to recalculate on-screen position
+      // // vis.Dots
+      // //   .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
+      // //   .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
+      // //   .attr("r", vis.radiusSize)
+      // //   .attr("fill", d => vis.handleDotColor(d,vis.colorType));
+      //   vis.data.forEach(d=> {
+      //     lats.push(d.latitude);
+      //     longs.push(d.longitude);
+      //   });
+      // }
+      // else {
+      //   lats = [];
+      //   longs = [];
+      //   console.log("Found the brush.");
 
-        vis.data.forEach(d=> {
-          if (d.year >= vis.startYear && d.year <= vis.endYear){
-            lats.push(d.latitude);
-            longs.push(d.longitude);
-          }
-        });
-        console.log("These are the latitudes:", vis.lats);  
-      }
+      //   vis.data.forEach(d=> {
+      //     if (d.year >= vis.startYear && d.year <= vis.endYear){
+      //       lats.push(d.latitude);
+      //       longs.push(d.longitude);
+      //     }
+      //   });
+      //   console.log("These are the latitudes:", vis.lats);  
+      // }
      
-      //redraw based on new zoom- need to recalculate on-screen position
-      vis.Dots
-        .attr("cx", d => vis.theMap.latLngToLayerPoint([d.lats, d.longs]).x)
-        .attr("cy", d => vis.theMap.latLngToLayerPoint([d.lats, d.longs]).y)
-        .attr("r", vis.radiusSize)
-        .attr("fill", d => vis.handleDotColor(d,vis.colorType));
-      //////////////////end attempt 1
-
-
-      // //Original
       // //redraw based on new zoom- need to recalculate on-screen position
       // vis.Dots
-      //   .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
-      //   .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
+      //   .attr("cx", d => vis.theMap.latLngToLayerPoint([d.lats, d.longs]).x)
+      //   .attr("cy", d => vis.theMap.latLngToLayerPoint([d.lats, d.longs]).y)
       //   .attr("r", vis.radiusSize)
       //   .attr("fill", d => vis.handleDotColor(d,vis.colorType));
+      // //////////////////end attempt 1
+
+
+      //Original
+      //redraw based on new zoom- need to recalculate on-screen position
+      vis.Dots
+        .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
+        .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y)
+        .attr("r", vis.radiusSize)
+        .attr("fill", d => vis.handleDotColor(d,vis.colorType));
   
     }
   
@@ -295,7 +237,58 @@ class LeafletMap {
     renderVis() {
       let vis = this;
   
-      //not using right now... 
+      //these are the city locations, displayed as a set of dots 
+      vis.Dots = vis.svg.selectAll('circle')
+        .data(vis.data) 
+        .join('circle')
+            .attr("fill", d => vis.handleDotColor(d, vis.colorType)) 
+            .attr("stroke", "black")
+            //Leaflet has to take control of projecting points. Here we are feeding the latitude and longitude coordinates to
+            //leaflet so that it can project them on the coordinates of the view. Notice, we have to reverse lat and lon.
+            //Finally, the returned conversion produces an x and y point. We have to select the the desired one using .x or .y
+            .attr("cx", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).x)
+            .attr("cy", d => vis.theMap.latLngToLayerPoint([d.latitude,d.longitude]).y) 
+            .attr("r", 3)
+            .on('mouseover', function(event,d) { //function to add mouseover event
+                d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
+                  .duration('150') //how long we are transitioning between the two states (works like keyframes)
+                  /*.attr("fill", "white") *///change the fill
+                  .attr('r', vis.theMap.getZoom() + 3); //change radius
+
+                //create a tool tip
+                d3.select('#tooltip-map')
+                    .style('opacity', 1)
+                    .style('display','block')
+                    .style('z-index', 1000000)
+                    .style('left', (event.pageX + 1) + 'px')   
+                    .style('top', (event.pageY + 1) + 'px')
+                      // Format number with million and thousand separator THESE R THE VARS: ${d.city} ${d3.format(',')(d.population)}
+                    .html(`<div class="tooltip-map-label">Collected: ${d.year} <br>
+                                                      Recorded By: ${d.recordedBy} <br>
+                                                      Kingdom: ${d.kingdom} <br>
+                                                      Phylum: ${d.phylum} <br>
+                                                      Habitat: ${d.habitat}</div>
+                                                      <a href="${d.references}" target="_blank">Database Entry</a>`);
+
+                vis.tooltipLeft = event.pageX + 1;
+                vis.tooltipTop = event.pageY + 1;
+              })
+            .on('mousemove', (event) => {
+                //position the tooltip
+              })              
+            .on('mouseleave', function(event) { //function to add mouseover event
+                d3.select(this).transition() //D3 selects the object we have moused over in order to perform operations on it
+                  .duration('150') //how long we are transitioning between the two states (works like keyframes)
+                  .attr("fill", d => vis.handleDotColor(d,vis.colorType)) //change the fill
+                  .attr('r', vis.theMap.getZoom() + 1) //change radius
+                  vis.checkTooltipClose(event);
+              })
+            .on('click', (event, d) => { //experimental feature I was trying- click on point and then fly to it
+                // vis.newZoom = vis.theMap.getZoom()+2;
+                // if( vis.newZoom > 18)
+                //  vis.newZoom = 18; 
+                // vis.theMap.flyTo([d.latitude, d.longitude], vis.newZoom);
+              }); 
    
     }
 
