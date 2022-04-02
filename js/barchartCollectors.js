@@ -9,7 +9,8 @@ class BarChartCollectors {
           parentElement: _config.parentElement,
           containerWidth: _config.containerWidth || 800,
           containerHeight: _config.containerHeight || 400,
-          margin: _config.margin || {top: 50, right: 10, bottom: 75, left: 115}
+          margin: _config.margin || {top: 50, right: 10, bottom: 75, left: 115},
+          tooltipPadding: _config.tooltipPadding || 15
         }
         this.data = _data;
         this.initVis();
