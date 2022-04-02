@@ -18,7 +18,7 @@ class PieChartDate {
 
         vis.categories = ["With Event Date", "Without Event Date"];
 
-        if (vis.startYear == null ){
+        if (vis.startYear == null){
             vis.totalSpecimens = d3.count(vis.data, d => d.id);
             vis.haveDate = d3.count(vis.data, d => d.eventDate);
             vis.noDate = vis.totalSpecimens - vis.haveDate;
