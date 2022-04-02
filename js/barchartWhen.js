@@ -4,7 +4,7 @@ class BarChartWhen {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 800,
             containerHeight: _config.containerHeight || 400,
-            margin: _config.margin || {top: 50, right: 10, bottom: 30, left: 110},
+            margin: _config.margin || {top: 10, right: 50, bottom: 30, left: 110},
             tooltipPadding: _config.tooltipPadding || 15
         }
   
